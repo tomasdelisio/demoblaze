@@ -1,6 +1,6 @@
 package test_login;
 
-import static org.testng.AssertJUnit.assertNull;
+//import static org.testng.AssertJUnit.assertNull;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
