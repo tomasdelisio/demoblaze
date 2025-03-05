@@ -18,19 +18,65 @@ import driver.Driver;
 import pages.BasePage;
 import pages.LoginPage;
 import report.Report;
+import utils.Messages;
+import utils.MessagesLogin;
 
 public class Login {
-	/*** DRIVER ***/
+	/*** VARIABLES ***/
+	// Driver
 	private WebDriver driver = null;
 
-	/*** PAGES ***/
+	// Pages
 	private BasePage basePage = null;
 	private LoginPage loginPage = null;
 
-	/*** VARIABLES ***/
+	// URL
 	private static final String URL = "https://www.demoblaze.com/index.html";
+	
+	// Messages Login
+	private final String LOGIN_TEST_START = MessagesLogin.LOGIN_TEST_START.getMessage();
+	private final String LOGIN = MessagesLogin.LOGIN.getMessage(); 
+	private final String LOGIN_COMPLETED = MessagesLogin.LOGIN_COMPLETED.getMessage();
+	private final String LOGIN_INCORRECT_COMPLETED = MessagesLogin.LOGIN_INCORRECT_COMPLETED.getMessage();
+	private final String VALIDATE_LOGIN = MessagesLogin.VALIDATE_LOGIN.getMessage();
+	private final String VALIDATE_LOGIN_INCORRECT = MessagesLogin.VALIDATE_LOGIN_INCORRECT.getMessage();
+	private final String LOGIN_TEST_OK = MessagesLogin.LOGIN_TEST_OK.getMessage();
+	private final String LOGIN_INCORRECT_TEST_OK = MessagesLogin.LOGIN_INCORRECT_TEST_OK.getMessage();
+	private final String LOGIN_TEST_ERROR = MessagesLogin.LOGIN_TEST_ERROR.getMessage();
+	private final String LOGIN_TEST_FINISH = MessagesLogin.LOGIN_TEST_FINISH.getMessage();
+	
+	// Messages
+	private final String USR_COMPLETED = Messages.USR_COMPLETED.getMessage();
+	private final String PASS_COMPLETED = Messages.PASS_COMPLETED.getMessage();
+	private final String WELCOME_TXT_SAVED = Messages.WELCOME_TXT_SAVED.getMessage();
+	private final String USR_OF_WELCOME_TXT_SAVED = Messages.USR_OF_WELCOME_TXT_SAVED.getMessage();
+	private final String ALERT_TXT_SAVED = Messages.ALERT_TXT_SAVED.getMessage();
+	private final String USR_MATCH = Messages.USR_MATCH.getMessage();
+	private final String PASS_MATCH = Messages.PASS_MATCH.getMessage();
+	private final String WELCOME_TXT_VISIBLE = Messages.WELCOME_TXT_VISIBLE.getMessage();
+	private final String USR_OF_WELCOME_TXT_MATCH = Messages.USR_OF_WELCOME_TXT_MATCH.getMessage();
+	private final String ALERT_TXT_MATCH = Messages.ALERT_TXT_MATCH.getMessage();
+	private final String ALERT_ACCEPTED = Messages.ALERT_ACCEPTED.getMessage();
+	private final String USR_MISMATCH = Messages.USR_MISMATCH.getMessage();
+	private final String PASS_MISMATCH = Messages.PASS_MISMATCH.getMessage();
+	private final String WELCOME_TXT_NOT_VISIBLE = Messages.WELCOME_TXT_NOT_VISIBLE.getMessage();
+	private final String USR_OF_WELCOME_TEXT_MISMATCH = Messages.USR_OF_WELCOME_TXT_MISMATCH.getMessage();
+	private final String ALERT_TXT_MISMATCH = Messages.ALERT_TXT_MISMATCH.getMessage();
+	private final String USR_DOES_NOT_EXIST = Messages.USR_DOES_NOT_EXIST.getMessage();
+	private final String WRONG_PASS = Messages.WRONG_PASS.getMessage();
+	private final String USR_PASS_NULL = Messages.USR_PASS_NULL.getMessage();
+	
+	// Messages Assertion
+	private final String HANDLE_ASSERTION_ERROR = Messages.HANDLE_ASSERTION_ERROR.getMessage();
+	
+	// Data
+	private String usrActual = null;
+	private String passActual = null;
+	private Boolean isWelcomeTxtActualVisible = null;
+	private String usrOfWelcomeTxtActual = null;
+	private String alertTxtActual = null;
 
-	/*** REPORTS ***/
+	// Reports
 	private ExtentReports report = null;
 
 	/*** METHODS ***/
@@ -45,98 +91,157 @@ public class Login {
 		basePage.navigateTo(URL);
 
 		loginPage = new LoginPage();
+		
+	}
+	
+	// Testing Methods
+	private void startTest(ExtentTest test, String usr) {
+		test.log(Status.INFO, LOGIN_TEST_START + "\nUsuario: " + usr);
+		System.out.println(LOGIN_TEST_START + "\nUsuario: " + usr + "\n");
+		
+	}
+	
+	private void finishTest(ExtentTest test, String usr) {
+		test.log(Status.INFO, LOGIN_TEST_FINISH + "\nUsuario: " + usr);
+		System.out.println(LOGIN_TEST_FINISH + "\nUsuario: " + usr + "\n");
+		
+	}
+	
+	private void login(ExtentTest test, String usr, String pass) {
+		test.log(Status.INFO, LOGIN);
+		
+		loginPage.clickLoginBtn();
+		
+		loginPage.completeUsr(usr);
+		usrActual = loginPage.getUsrFldContent();
+		test.log(Status.INFO, USR_COMPLETED);
+		
+		loginPage.completePass(pass);
+		passActual = loginPage.getPassFldContent();
+		test.log(Status.INFO, PASS_COMPLETED);
+		
+		loginPage.clickLoginBtn2();
+		
+		isWelcomeTxtActualVisible = loginPage.isWelcomeTxtVisible();
+		test.log(Status.INFO, WELCOME_TXT_SAVED);
+		
+		usrOfWelcomeTxtActual = loginPage.getUsrOfWelcomeTxt();
+		test.log(Status.INFO, USR_OF_WELCOME_TXT_SAVED);
+		
+		test.log(Status.INFO, LOGIN_COMPLETED);
+		
+	}
+	
+	private void loginIncorrect(ExtentTest test, String usr, String pass) {
+		test.log(Status.INFO, LOGIN);
+		
+		loginPage.clickLoginBtn();
+		
+		loginPage.completeUsr(usr);
+		usrActual = loginPage.getUsrFldContent();
+		test.log(Status.INFO, USR_COMPLETED);
+		
+		loginPage.completePass(pass);
+		passActual = loginPage.getPassFldContent();
+		test.log(Status.INFO, PASS_COMPLETED);
+		
+		loginPage.clickLoginBtn2();
+		
+		alertTxtActual = loginPage.getAlertTxt();
+		test.log(Status.INFO, ALERT_TXT_SAVED);
+
+		loginPage.acceptAlert();
+		test.log(Status.INFO, ALERT_ACCEPTED);
+		
+		test.log(Status.INFO, LOGIN_INCORRECT_COMPLETED);
+		
+	}
+	
+	private void validateLogin(ExtentTest test, String usr, String pass) {
+		test.log(Status.INFO, VALIDATE_LOGIN);
+		
+		assertEquals(usrActual, usr, USR_MISMATCH);
+		test.pass(USR_MATCH);
+		
+		assertEquals(passActual, pass, PASS_MISMATCH);
+		test.pass(PASS_MATCH);
+		
+		assertTrue(isWelcomeTxtActualVisible, WELCOME_TXT_NOT_VISIBLE);
+		test.pass(WELCOME_TXT_VISIBLE);
+		
+		assertEquals(usrOfWelcomeTxtActual, usr, USR_OF_WELCOME_TEXT_MISMATCH);
+		test.pass(USR_OF_WELCOME_TXT_MATCH);
+		
+		test.pass(LOGIN_TEST_OK);
+		System.out.println(LOGIN_TEST_OK + "\nUsuario: " + usr + "\n");
+		
+	}
+	
+	private void validateLoginIncorrect(ExtentTest test, String usr, String pass, String msg) {
+		test.log(Status.INFO, VALIDATE_LOGIN_INCORRECT);
+		
+		assertEquals(usrActual, usr, USR_MISMATCH);
+		test.pass(USR_MATCH);
+		
+		assertEquals(passActual, pass, PASS_MISMATCH);
+		test.pass(PASS_MATCH);
+		
+		assertEquals(alertTxtActual, msg, ALERT_TXT_MISMATCH);
+		test.pass(ALERT_TXT_MATCH);
+		
+		test.pass(LOGIN_INCORRECT_TEST_OK);
+		System.out.println(LOGIN_INCORRECT_TEST_OK + "\nUsuario: " + usr + "\n");
+		
+	}
+	
+	private void handleAssertionError(ExtentTest test, String usr, AssertionError e) {
+		test.log(Status.INFO, HANDLE_ASSERTION_ERROR);
+		
+		test.addScreenCaptureFromPath("screenshot.png");
+		
+		test.fail(LOGIN_TEST_ERROR + "\nUsuario: " + usr + " \nERROR: " + e.getMessage());
+		System.out.println(LOGIN_TEST_ERROR + "\nUsuario: " + usr + " \nERROR: " + e.getMessage() + "\n");
+		
 	}
 
 	// Tests
 	@Test(dataProvider = "Login", dataProviderClass = Data.class, priority = 1)
-	public void login(String usr, String pass) {
+	public void loginOK(String usr, String pass) {
 		ExtentTest test = report.createTest("Login Test");
 		
-		test.log(Status.INFO, "LOGIN TEST STARTED SUCCESSFULLY");
-		System.out.println("\n***LOGIN TEST STARTED SUCCESSFULLY***");
+		startTest(test, usr);
 		
-		loginPage.clickLoginBtn();
-		test.pass("User clicked login button");
-
-		loginPage.completeUsr(usr);
-		test.pass("User completed username");
-
-		loginPage.completePass(pass);
-		test.pass("User completed password");
-
-		loginPage.clickLoginBtn2();
-		test.pass("User clicked login button");
-
-		test.info("Login Data User Completed");
-
+		login(test, usr, pass);
+		
 		try {
+			validateLogin(test, usr, pass);
 			
-			assertEquals(loginPage.getUsrFldContent(), usr);
-			assertEquals(loginPage.getPassFldContent(), pass);
-			assertTrue(loginPage.isWelcomeTxtVisible());
-			assertEquals(loginPage.getUsrOfWelcomeTxt(), usr);
-			
-			test.pass("Login test OK");
-			test.log(Status.INFO, "LOGIN TEST COMPLETED SUCCESSFULLY");
-			System.out.println("***LOGIN TEST COMPLETED SUCCESSFULLY***\n");
-
 		} catch (AssertionError e) {
-			test.addScreenCaptureFromPath("screenshot.png");
-			test.fail("Login test NO OK");
-			test.log(Status.INFO, "LOGIN TEST COMPLETED UNSUCCESSFULLY: WELCOME TEXT IS NOT VISIBLE");
-			System.out.println("***LOGIN TEST COMPLETED UNSUCCESSFULLY***\n");
-
+			handleAssertionError(test, usr, e);
+			
+		} finally {
+			finishTest(test, usr);
+			
 		}
-
 	}
 
-/*	@Test(dataProvider = "LoginUsernameIncorrect", dataProviderClass = Data.class, priority = 2)
+	@Test(dataProvider = "LoginUsernameIncorrect", dataProviderClass = Data.class, priority = 2)
 	public void loginUsrIncorrect(String usr, String pass) {
 		ExtentTest test = report.createTest("Login Username Incorrect Test");
-		String error = null;
-		String alert = null;
 
-		test.log(Status.INFO, "LOGIN USERNAME INCORRECT TEST STARTED SUCCESSFULLY");
-		System.out.println("\n***LOGIN USERNAME INCORRECT TEST STARTED***");
+		startTest(test, usr);
 		
-		loginPage.clickLoginBtn();
-		test.pass("User clicked login button");
-
-		loginPage.completeUsr(usr);
-		test.pass("User completed username");
-
-		loginPage.completePass(pass);
-		test.pass("User completed password");
-
-		loginPage.clickLoginBtn2();
-		test.pass("User clicked login button");
-
-		test.info("Login Data User Completed");
-
+		loginIncorrect(test, usr, pass);
+		
 		try {
-			error = loginPage.getUsrDoesNotExistError();
-			alert = loginPage.getAlertTxt();
-			test.pass("Alert text saved");
-
-			loginPage.acceptAlert();
-			test.pass("User acepted alert");
-			
-			System.out.println("Error definido: " + error);
-			System.out.println("Error obtenido: " + alert);
-			
-			assertEquals(loginPage.getUsrFldContent(), usr);
-			assertEquals(loginPage.getPassFldContent(), pass);
-			assertEquals(error, alert);
-			
-			test.pass("Login test OK");
-			test.log(Status.INFO, "LOGIN USERNAME INCORRECT TEST COMPLETED SUCCESSFULLY");
-			System.out.println("***LOGIN USERNAME INCORRECT TEST COMPLETED SUCCESSFULLY***\n");
+			validateLoginIncorrect(test, usr, pass, USR_DOES_NOT_EXIST);
 
 		} catch (AssertionError e) {
-			test.addScreenCaptureFromPath("screenshot.png");
-			test.fail("Login test NO OK");
-			test.log(Status.INFO, "LOGIN USERNAME INCORRECT TEST COMPLETED UNSUCCESSFULLY");
-			System.out.println("***LOGIN USERNAME INCORRECT TEST COMPLETED UNSUCCESSFULLY***\n");
+			handleAssertionError(test, usr, e);
+			
+		} finally {
+			finishTest();
+			
 		}
 
 	}
@@ -144,143 +249,64 @@ public class Login {
 	@Test(dataProvider = "LoginPasswordIncorrect", dataProviderClass = Data.class, priority = 3)
 	public void loginPassIncorrect(String usr, String pass) {
 		ExtentTest test = report.createTest("Login Password Incorrect Test");
-		String error = null;
-		String alert = null;
-
-		test.log(Status.INFO, "LOGIN PASSWORD INCORRECT TEST STARTED SUCCESSFULLY");
-		System.out.println("\n***LOGIN PASSWORD INCORRECT TEST STARTED SUCCESSFULLY***");
 		
-		loginPage.clickLoginBtn();
-		test.pass("User clicked login button");
-
-		loginPage.completeUsr(usr);
-		test.pass("User completed username");
-
-		loginPage.completePass(pass);
-		test.pass("User completed password");
-
-		loginPage.clickLoginBtn2();
-		test.pass("User clicked login button");
-
-		test.info("Login Data User Completed");
+		startTest(test, usr);
+		
+		loginIncorrect(test, usr, pass);
 
 		try {
-			error = loginPage.getWrongPassError();
-			alert = loginPage.getAlertTxt();
-			test.pass("Alert text saved");
-
-			loginPage.acceptAlert();
-			test.pass("User acepted alert");
-
-			assertEquals(loginPage.getUsrFldContent(), usr);
-			assertEquals(loginPage.getPassFldContent(), pass);
-			assertEquals(error, alert);
-			
-			test.pass("Login test OK");
-			test.log(Status.INFO, "LOGIN PASSWORD INCORRECT TEST COMPLETED SUCCESSFULLY");
-			System.out.println("***LOGIN PASSWORD INCORRECT TEST COMPLETED SUCCESSFULLY***\n");
+			validateLoginIncorrect(test, usr, pass, WRONG_PASS);
 
 		} catch (AssertionError e) {
-			test.addScreenCaptureFromPath("screenshot.png");
-			test.fail("Login test NO OK");
-			test.log(Status.INFO, "LOGIN PASSWORD INCORRECT TEST COMPLETED UNSUCCESSFULLY");
-			System.out.println("***LOGIN PASSWORD INCORRECT TEST COMPLETED UNSUCCESSFULLY***\n");
+			handleAssertionError(test, usr, e);
+			
+		} finally {
+			finishTest();
+			
 		}
 
 	}
 
 	@Test(dataProvider = "LoginUsernameOrPasswordNull", dataProviderClass = Data.class, priority = 4)
 	public void loginUsrOrPassNull(String usr, String pass) {
-		ExtentTest test = report.createTest("Login Username/Password Null Test");
-		String error = null;
-		String alert = null;
-
-		test.log(Status.INFO, "LOGIN USERNAME/PASSWORD NULL TEST STARTED SUCCESSFULLY");
-		System.out.println("\n***LOGIN USERNAME/PASSWORD NULL TEST STARTED SUCCESSFULLY***");
+		ExtentTest test = report.createTest("Login Username Or Password Null Test");
 		
-		loginPage.clickLoginBtn();
-		test.pass("User clicked login button");
-
-		loginPage.completeUsr(usr);
-		test.pass("User completed username");
-
-		loginPage.completePass(pass);
-		test.pass("User completed password");
-
-		loginPage.clickLoginBtn2();
-		test.pass("User clicked login button");
-
-		test.info("Login Data User Completed");
+		startTest(test, usr);
+		
+		loginIncorrect(test, usr, pass);
 
 		try {
-			error = loginPage.getNullFldError();
-			alert = loginPage.getAlertTxt();
-			test.pass("Alert text saved");
-
-			loginPage.acceptAlert();
-			test.pass("User acepted alert");
-
-			assertEquals(loginPage.getUsrFldContent(), usr);
-			assertEquals(loginPage.getPassFldContent(), pass);
-			assertEquals(error, alert);
-			
-			test.pass("Login test OK");
-			test.log(Status.INFO, "LOGIN USERNAME/PASSWORD NULL TEST COMPLETED SUCCESSFULLY");
-			System.out.println("***LOGIN USERNAME/PASSWORD NULL TEST COMPLETED SUCCESSFULLY***\n");
+			validateLoginIncorrect(test, usr, pass, USR_PASS_NULL);
 
 		} catch (AssertionError e) {
-			test.addScreenCaptureFromPath("screenshot.png");
-			test.fail("Login test NO OK");
-			test.log(Status.INFO, "LOGIN USERNAME/PASSWORD NULL TEST COMPLETED UNSUCCESSFULLY");
-			System.out.println("***LOGIN USERNAME/PASSWORD NULL TEST COMPLETED UNSUCCESSFULLY***\n");
+			handleAssertionError(test, usr, e);
+			
+		} finally {
+			finishTest();
+			
 		}
 
 	}
 	
-	@Test(priority = 5)
-	public void loginNull() {
-		ExtentTest test = report.createTest("Login Null Test");
-		String error = null;
-		String alert = null;
-
-		test.log(Status.INFO, "LOGIN NULL TEST STARTED SUCCESSFULLY");
-		System.out.println("\n***LOGIN NULL TEST STARTED SUCCESSFULLY***");
-
-		loginPage.clickLoginBtn();
-		test.pass("User clicked login button");
-
-		loginPage.clickLoginBtn2();
-		test.pass("User clicked login button");
-
-		test.info("Login Data User Not Completed");
+	@Test(dataProvider = "LoginUsernameAndPasswordNull", dataProviderClass = Data.class, priority = 5)
+	public void loginUsrAndPassNull(String usr, String pass) {
+		ExtentTest test = report.createTest("Login Username And Password Null Test");
+		
+		startTest(test, usr);
+		
+		loginIncorrect(test, usr, pass);
 
 		try {
-			error = loginPage.getNullFldError();
-			alert = loginPage.getAlertTxt();
-			test.pass("Alert text saved");
-
-			loginPage.acceptAlert();
-			test.pass("User acepted alert");
-	
-			System.out.println("Error definido: " + error);
-			System.out.println("Error obtenido: " + alert);
-			
-			assertEquals(loginPage.getUsrFldContent(), "");
-			assertEquals(loginPage.getPassFldContent(), "");
-			assertEquals(error, alert);
-			
-			test.pass("Login test OK");
-			test.log(Status.INFO, "LOGIN NULL TEST COMPLETED SUCCESSFULLY");
-			System.out.println("***LOGIN NULL TEST COMPLETED SUCCESSFULLY***\n");
+			validateLoginIncorrect(test, usr, pass, USR_PASS_NULL);
 
 		} catch (AssertionError e) {
-			test.addScreenCaptureFromPath("screenshot.png");
-			test.fail("Login test NO OK");
-			test.log(Status.INFO, "LOGIN NULL TEST COMPLETED UNSUCCESSFULLY");
-			System.out.println("***LOGIN NULL TEST COMPLETED UNSUCCESSFULLY***\n");
-		} 
-
-	} */
+			handleAssertionError(test, usr, e);
+			
+		} finally {
+			finishTest();
+			
+		}
+	}
 	
 	// Post-Config
 	@AfterMethod
@@ -288,5 +314,6 @@ public class Login {
 		report.flush();
 
 		Driver.finish();
+		
 	}
 }

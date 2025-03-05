@@ -1,0 +1,28 @@
+package utils;
+
+public enum MessagesLogin {
+	// **** MESSAGES *** //
+	// Login OK
+	LOGIN_TEST_START("INICIANDO PRUEBA DE LOGIN"),
+	LOGIN("LOGUEANDO"),
+	LOGIN_COMPLETED("LOGIN COMPLETADO"),
+	LOGIN_INCORRECT_COMPLETED("LOGIN INCORRECTO COMPLETADO"),
+	VALIDATE_LOGIN("VALIDANDO LOGIN"),
+	VALIDATE_LOGIN_INCORRECT("VALIDANDO LOGIN INCORRECTO"),
+	LOGIN_TEST_OK("PRUEBA DE LOGIN EXITOSA"),
+	LOGIN_INCORRECT_TEST_OK("PRUEBA DE LOGIN INCORRECTO EXITOSA"),
+	LOGIN_TEST_FINISH("FINALIZANDO PRUEBA DE LOGIN"),
+	
+	// Login Error
+	LOGIN_ERROR("PRUEBA DE LOGIN FALLIDA");
+	
+	private final String message;
+	
+	MessagesLogin(String message){
+		this.message = message;
+	}
+	
+	public String getMessage() {
+		return message;
+	}
+}

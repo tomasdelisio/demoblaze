@@ -38,5 +38,6 @@ public class Report {
 		report.attachReporter(spark);
 		
 		return report;
+		
 	}
 }
