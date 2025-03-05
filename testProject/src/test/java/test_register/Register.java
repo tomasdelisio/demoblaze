@@ -39,12 +39,9 @@ public class Register {
 	private final String REGISTER_TEST_START = MessagesRegister.REGISTER_TEST_START.getMessage();
 	private final String REGISTER = MessagesRegister.REGISTER.getMessage(); 
 	private final String REGISTER_COMPLETED = MessagesRegister.REGISTER_COMPLETED.getMessage();
-//	private final String LOGIN_INCORRECT_COMPLETED = MessagesLogin.LOGIN_INCORRECT_COMPLETED.getMessage();
 	private final String VALIDATE_REGISTER = MessagesRegister.VALIDATE_REGISTER.getMessage();
-//	private final String VALIDATE_LOGIN_INCORRECT = MessagesLogin.VALIDATE_LOGIN_INCORRECT.getMessage();
 	private final String REGISTER_OK = MessagesRegister.REGISTER_OK.getMessage();
 	private final String REGISTER_TEST_OK = MessagesRegister.REGISTER_TEST_OK.getMessage();
-//	private final String LOGIN_INCORRECT_OK = MessagesLogin.LOGIN_INCORRECT_OK.getMessage();
 	private final String REGISTER_TEST_ERROR = MessagesRegister.REGISTER_TEST_ERROR.getMessage();
 	private final String REGISTER_TEST_FINISH = MessagesRegister.REGISTER_TEST_FINISH.getMessage();
 	
