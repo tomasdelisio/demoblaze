@@ -50,5 +50,6 @@ public class Driver {
 		driver.quit();
 
 		logger.info("Driver quit");
+		
 	}
 }

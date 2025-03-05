@@ -27,6 +27,7 @@ public class Data {
 		}
 
 		return dt;
+		
 	}
 
 	// Login Cases
@@ -36,6 +37,7 @@ public class Data {
 		Object dt[][] = data(base_path + path, "Data");
 
 		return dt;
+		
 	}
 
 	@DataProvider(name = "LoginUsernameIncorrect")
@@ -44,6 +46,7 @@ public class Data {
 		Object dt[][] = data(base_path + path, "Data");
 
 		return dt;
+		
 	}
 	
 	@DataProvider(name = "LoginPasswordIncorrect")
@@ -52,6 +55,7 @@ public class Data {
 		Object dt[][] = data(base_path + path, "Data");
 
 		return dt;
+		
 	}
 	
 	@DataProvider(name = "LoginUsernameOrPasswordNull")
@@ -60,6 +64,20 @@ public class Data {
 		Object dt[][] = data(base_path + path, "Data");
 
 		return dt;
+		
+	}
+	
+	@DataProvider(name = "LoginUsernameAndPasswordNull")
+	public Object[][] getDataLoginUsrAndPassNull() {
+		String path = "\\login\\loginUsernameAndPasswordNull.xlsx";
+		Object dt[][] = data(base_path + path, "Data");
+		
+		if (dt == null || dt.length == 0) {
+			dt = new Object[][] {{"", ""}};
+		}
+
+		return dt;
+		
 	}
 
 	// Register Cases
@@ -69,6 +87,7 @@ public class Data {
 		Object dt[][] = data(base_path + path, "Data");
 
 		return dt;
+		
 	}
 
 	@DataProvider(name = "RegisterUsernameExistent")
@@ -77,6 +96,7 @@ public class Data {
 		Object dt[][] = data(base_path + path, "Data");
 
 		return dt;
+		
 	}
 	
 	@DataProvider(name = "RegisterUsernameOrPasswordNull")
@@ -85,5 +105,19 @@ public class Data {
 		Object dt[][] = data(base_path + path, "Data");
 
 		return dt;
+		
+	}
+	
+	@DataProvider(name = "RegisterUsernameAndPasswordNull")
+	public Object[][] getDataRegisterUsrAndPassNull() {
+		String path = "\\register\\registerUsernameAndPasswordNull.xlsx";
+		Object dt[][] = data(base_path + path, "Data");
+		
+		if (dt == null || dt.length == 0) {
+			dt = new Object[][] {{"", ""}};
+		}
+
+		return dt;
+
 	}
 }

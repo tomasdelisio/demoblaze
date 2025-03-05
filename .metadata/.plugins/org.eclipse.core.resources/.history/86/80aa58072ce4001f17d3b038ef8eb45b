@@ -1,0 +1,16 @@
+package utils;
+
+public enum ErrorMessages {
+	USR_MISMATCH;
+	
+	private final String message;
+	
+	ErrorMessages(String message){
+		this.message = message;
+	}
+	
+	public String getMessage() {
+		return message;
+	}
+	
+}
