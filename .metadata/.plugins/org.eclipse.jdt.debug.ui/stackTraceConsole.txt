@@ -1,18 +1,12 @@
-try {
-			
-			assertEquals(loginPage.getUsrFldContent(), usr);
-			assertEquals(loginPage.getPassFldContent(), pass);
-			assertTrue(loginPage.isWelcomeTxtVisible());
-			assertEquals(loginPage.getUsrOfWelcomeTxt(), usr);
-			
-			test.pass("Login test OK");
-			test.log(Status.INFO, "LOGIN TEST COMPLETED SUCCESSFULLY");
-			System.out.println("***LOGIN TEST COMPLETED SUCCESSFULLY***\n");
-
-		} catch (AssertionError e) {
-			test.addScreenCaptureFromPath("screenshot.png");
-			test.fail("Login test NO OK");
-			test.log(Status.INFO, "LOGIN TEST COMPLETED UNSUCCESSFULLY: WELCOME TEXT IS NOT VISIBLE");
-			System.out.println("***LOGIN TEST COMPLETED UNSUCCESSFULLY***\n");
-
-		}
+// Testing Methods
+	private void startTest(ExtentTest test, String usr) {
+		test.log(Status.INFO, LOGIN_TEST_START + "\nUsuario: " + usr);
+		System.out.println(LOGIN_TEST_START + "\nUsuario: " + usr + "\n");
+		
+	}
+	
+	private void finishTest(ExtentTest test, String usr) {
+		test.log(Status.INFO, LOGIN_TEST_FINISH + "\nUsuario: " + usr);
+		System.out.println(LOGIN_TEST_FINISH + "\nUsuario: " + usr + "\n");
+		
+	}
