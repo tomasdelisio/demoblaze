@@ -5,10 +5,13 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ExcelUtils {
+	/*** VARIABLES ***/
 	static XSSFWorkbook workbook;
 	static XSSFSheet sheet;
 	static DataFormatter formatter = new DataFormatter();
 	
+	/*** METHODS ***/
+	// Excel configuration
 	public ExcelUtils(String path, String sheet) {
 		try {
 			workbook = new XSSFWorkbook(path);
@@ -40,6 +43,7 @@ public class ExcelUtils {
 		
 	}
 	
+	// Getter
 	public static int getColCount() {
 		int colCount = 0;
 		

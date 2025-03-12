@@ -7,10 +7,11 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 public class Driver {
-	/*** DRIVER ***/
+	/*** VARIABLES ***/
+	// Driver
 	private static WebDriver driver;
 
-	/*** LOGGER ***/
+	// Logger
 	private static Logger logger = LogManager.getLogger(Driver.class);
 
 	/*** METHODS ***/
@@ -24,8 +25,7 @@ public class Driver {
 		System.setProperty("webdriver.chrome.driver", "src/test/resources/driver/chromedriver/132/chromedriver.exe");
 		
 		// LINUX
-		// System.setProperty("webdriver.chrome.driver",
-		// "src/test/resources/driver/chromedriver/119/chromedriver");
+		// System.setProperty("webdriver.chrome.driver", "src/test/resources/driver/chromedriver/119/chromedriver");
 
 		logger.info("ChromeOptions Configuration Started");
 		ChromeOptions options = new ChromeOptions();
@@ -43,7 +43,7 @@ public class Driver {
 
 	}
 
-	// Finish connection
+	// Close connection
 	public static void finish() {
 	//	logger.info("Driver close");
 	//	driver.close();

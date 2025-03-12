@@ -9,10 +9,11 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class BasePage {
-	/*** DRIVER ***/
+	/*** VARIABLES ***/
+	// Driver
 	public static WebDriver driver;
 
-	/*** CONSTRUCTOR ***/
+	// Constructor
 	public BasePage(WebDriver driver) {
 		BasePage.driver = driver;
 		PageFactory.initElements(driver, this);
@@ -20,6 +21,7 @@ public class BasePage {
 	}
 
 	/*** METHODS ***/
+	// Actions
 	public void navigateTo(String URL) {
 		driver.get(URL);
 		
@@ -39,30 +41,7 @@ public class BasePage {
 		}
 	}
 
-	public String getText(WebElement element, String id) {
-		String text = null;
-		
-		if (elementVisible(element, id) != null) {
-			text = element.getText();
-			
-		}
-		
-		return text;
-		
-	}
-	
-	public String getAttribute(WebElement element, String id, String attribute) {
-		String element_attribute = null;
-		
-		if (elementVisible(element, id) != null) {
-			element_attribute = element.getAttribute(attribute);
-			
-		}
-		
-		return element_attribute;
-		
-	}
-
+	// Alerts
 	public void switchToFrame(WebElement element, String id) {
 		if (elementVisible(element, id) != null) {
 			driver.switchTo().frame(element);
@@ -91,21 +70,6 @@ public class BasePage {
 			
 		}
 	}
-
-	public String getAlertText(String id) {
-		Alert alert = null;
-		String text = null;
-		
-		if (alertIsPresent(id) != null) {
-			alert = switchToAlert(id);
-			
-			text = alert.getText();
-			
-		}
-		
-		return text;
-		
-	}
 	
 	public Alert switchToAlert(String id) {
 		Alert alert = null;
@@ -119,6 +83,7 @@ public class BasePage {
 		
 	}
 
+	// Clear
 	public void clear(WebElement element, String id) {
 		if (elementVisible(element, id) != null) {
 			element.clear();
@@ -126,6 +91,7 @@ public class BasePage {
 		}
 	}
 
+	// Validations
 	public static ExpectedCondition<WebElement> elementToBeClickable(WebElement element, String id) {
 	    try {
 	        new WebDriverWait(driver, java.time.Duration.ofSeconds(10))
@@ -237,6 +203,7 @@ public class BasePage {
 	    }
 	}
 
+	// Getter
 	public WebElement getElement(WebElement element, String id) {
 		if (elementVisible(element, id) != null) {
 			return element;
@@ -245,5 +212,44 @@ public class BasePage {
 			return null;
 			
 		}
+	}
+	
+	public String getText(WebElement element, String id) {
+		String text = null;
+		
+		if (elementVisible(element, id) != null) {
+			text = element.getText();
+			
+		}
+		
+		return text;
+		
+	}
+	
+	public String getAlertText(String id) {
+		Alert alert = null;
+		String text = null;
+		
+		if (alertIsPresent(id) != null) {
+			alert = switchToAlert(id);
+			
+			text = alert.getText();
+			
+		}
+		
+		return text;
+		
+	}
+	
+	public String getAttribute(WebElement element, String id, String attribute) {
+		String element_attribute = null;
+		
+		if (elementVisible(element, id) != null) {
+			element_attribute = element.getAttribute(attribute);
+			
+		}
+		
+		return element_attribute;
+		
 	}
 }

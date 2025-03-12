@@ -5,7 +5,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class LoginPage extends BasePage {
-	/*** LOCATORS ***/
+	/*** VARIABLES ***/
+	// Locators
 	@FindBy(id = "login2")
 	private WebElement login_btn;
 	@FindBy(id = "loginusername")
@@ -17,10 +18,10 @@ public class LoginPage extends BasePage {
 	@FindBy(id = "nameofuser")
 	private WebElement welcome_txt;
 	
-	/*** ATTRIBUTES ***/
+	// Attributes
 	private static final String value = "value";
 
-	/*** VARIABLES ***/
+	// Variables
 	private boolean isVisible = false;
 	private String alert_text = null;
 	private String welcome_text = null;
@@ -34,14 +35,13 @@ public class LoginPage extends BasePage {
 	private static final String welcome_txt_id = "'WELCOME' Text";
 	private static final String alert_id = "Alert";
 
-	/*** CONSTRUCTOR ***/
+	// Constructor
 	public LoginPage() {
 		super(driver);
 		
 	}
 
 	/*** METHODS ***/
-
 	// Login
 	public void clickLoginBtn() {
 		click(login_btn, login_btn_id);

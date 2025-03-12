@@ -1,7 +1,7 @@
 package utils;
 
 public enum Messages {
-	// **** MESSAGES *** //	
+	/*** MESSAGES ***/	
 	// OK
 	USR_COMPLETED("USUARIO INGRESADO Y ALMACENADO"),
 	PASS_COMPLETED("CONTRASEÑA INGRESADA Y ALMACENADA"),
@@ -27,14 +27,17 @@ public enum Messages {
 	USR_PASS_NULL("Please fill out Username and Password."),
 	HANDLE_ASSERTION_ERROR("CONTROLANDO EXCEPCIONES");
 	
-	
+	/*** VARIABLES ***/
 	private final String message;
 	
+	/*** METHODS ***/
+	// Setter
 	Messages(String message){
 		this.message = message;
 		
 	}
 	
+	// Getter
 	public String getMessage() {
 		return message;
 		

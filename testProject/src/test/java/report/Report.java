@@ -8,6 +8,7 @@ import com.aventstack.extentreports.reporter.configuration.Theme;
 
 public class Report {
 	/*** VARIABLES ***/
+	// Variables
 	private static final String type_file = ".html";
 	
 	private static Calendar date = Calendar.getInstance();
@@ -24,11 +25,12 @@ public class Report {
 	//private static String reports_path = "C:\\Users\\PC\\Desktop\\Documentos\\QA\\Workspace\\testProject\\src\\test\\resources\\reports\\" + report_name + "\\" + report_name + type_file; OLD PATH
 	private static String reports_path = "C:\\Users\\tomas\\Desktop\\Automation\\TestProject\\testProject\\src\\test\\resources\\reports\\" + report_name + "\\" + report_name + type_file;
 	
-	/*** REPORTS ***/
+	// Report
 	private static ExtentReports report = new ExtentReports();
 	private static ExtentSparkReporter spark = new ExtentSparkReporter(reports_path);
 	
 	/*** METHODS ***/
+	// Report configuration
 	public static ExtentReports configurate() {
 		
 		spark.config().setTheme(Theme.DARK);
