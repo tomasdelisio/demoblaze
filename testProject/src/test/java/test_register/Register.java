@@ -77,7 +77,7 @@ public class Register {
 	private ExtentReports report = null;
 
 	/*** METHODS ***/
-	// Pre-Config
+	// Test Pre-Config
 	@BeforeMethod
 	public void configurateTest() {
 		driver = Driver.configurate();
@@ -246,7 +246,7 @@ public class Register {
 		}
 	}
 
-	// Post-Config
+	// Test Post-Config
 	@AfterMethod
 	public void finishTest() {
 		report.flush();

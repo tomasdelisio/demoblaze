@@ -80,7 +80,7 @@ public class Login {
 	private ExtentReports report = null;
 
 	/*** METHODS ***/
-	// Pre-Config
+	// Test Pre-Config
 	@BeforeMethod
 	public void configurateTest() {
 		driver = Driver.configurate();
@@ -308,7 +308,7 @@ public class Login {
 		}
 	}
 	
-	// Post-Config
+	// Test Post-Config
 	@AfterMethod
 	public void finishTest() {
 		report.flush();

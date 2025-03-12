@@ -5,7 +5,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class RegisterPage extends BasePage {
-	/*** LOCATORS ***/
+	/*** VARIABLES ***/
+	// Locators
 	@FindBy(id = "signin2")
 	private WebElement register_btn;
 	@FindBy(id = "sign-username")
@@ -15,10 +16,10 @@ public class RegisterPage extends BasePage {
 	@FindBy(xpath = "//button[@onclick=\"register()\"]")
 	private WebElement register_btn_2;
 	
-	/*** ATTRIBUTES ***/
+	// Attributes
 	private static final String value = "value";
 
-	/*** VARIABLES ***/
+	// Variables
 	private boolean isVisible = false;
 	private String alert_txt = null;
 	private String user_content = null;
@@ -29,14 +30,13 @@ public class RegisterPage extends BasePage {
 	private static final String register_btn_2_id = "Register Button 2";
 	private static final String alert_id = "Alert";
 
-	/*** CONSTRUCTOR ***/
+	// Constructor
 	public RegisterPage() {
 		super(driver);
 		
 	}
 
 	/*** METHODS ***/
-
 	// Register
 	public void clickRegisterBtn() {
 		click(register_btn, register_btn_id);

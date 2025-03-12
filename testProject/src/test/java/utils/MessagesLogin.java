@@ -1,8 +1,8 @@
 package utils;
 
 public enum MessagesLogin {
-	// **** MESSAGES *** //
-	// Login OK
+	//*** MESSAGES ***//
+	// OK
 	LOGIN_TEST_START("INICIANDO PRUEBA DE LOGIN"),
 	LOGIN("LOGUEANDO"),
 	LOGIN_COMPLETED("LOGIN COMPLETADO"),
@@ -15,17 +15,21 @@ public enum MessagesLogin {
 	LOGIN_BTN_SAVED("BOTÓN DE LOGIN ALMACENADO"),
 	LOGIN_BTN_VISIBLE("EL BOTÓN DE LOGIN ES VISIBLE"),
 	
-	// Login Error
+	// Error
 	LOGIN_TEST_ERROR("PRUEBA DE LOGIN FALLIDA"),
 	LOGIN_BTN_NOT_VISIBLE("EL BOTÓN DE LOGIN NO ES VIISBLE");
 	
+	/*** VARIABLES ***/
 	private final String message;
 	
+	/*** METHODS ***/
+	// Setter
 	MessagesLogin(String message){
 		this.message = message;
 		
 	}
 	
+	// Getter
 	public String getMessage() {
 		return message;
 		
