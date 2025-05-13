@@ -18,11 +18,10 @@ public class Report {
 	private static int hour = date.get(Calendar.HOUR_OF_DAY);
 	private static int minute = date.get(Calendar.MINUTE);
 	private static int second = date.get(Calendar.SECOND);
-	private static String dateFormatted = String.valueOf(year) + String.valueOf(month) + String.valueOf(day) + String.valueOf(hour) + String.valueOf(minute) + String.valueOf(second);
+	private static String date_formatted = String.valueOf(year) + String.valueOf(month) + String.valueOf(day) + String.valueOf(hour) + String.valueOf(minute) + String.valueOf(second);
 	
-	private static String report_name = "REPORT " + dateFormatted;
+	private static String report_name = "REPORT " + date_formatted;
 	
-	//private static String reports_path = "C:\\Users\\PC\\Desktop\\Documentos\\QA\\Workspace\\testProject\\src\\test\\resources\\reports\\" + report_name + "\\" + report_name + type_file; OLD PATH
 	private static String reports_path = "C:\\Users\\tomas\\Desktop\\Automation\\TestProject\\testProject\\src\\test\\resources\\reports\\" + report_name + "\\" + report_name + type_file;
 	
 	// Report

@@ -1,6 +1,5 @@
 package test_login;
 
-//import static org.testng.AssertJUnit.assertNull;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -27,8 +26,8 @@ public class Login {
 	private WebDriver driver = null;
 
 	// Pages
-	private BasePage basePage = null;
-	private LoginPage loginPage = null;
+	private BasePage base_page = null;
+	private LoginPage login_page = null;
 
 	// URL
 	private static final String URL = "https://www.demoblaze.com/index.html";
@@ -46,17 +45,11 @@ public class Login {
 	private final String LOGIN_TEST_FINISH = MessagesLogin.LOGIN_TEST_FINISH.getMessage();
 	
 	// Messages
-	private final String USR_COMPLETED = Messages.USR_COMPLETED.getMessage();
-	private final String PASS_COMPLETED = Messages.PASS_COMPLETED.getMessage();
-	private final String WELCOME_TXT_SAVED = Messages.WELCOME_TXT_SAVED.getMessage();
-	private final String USR_OF_WELCOME_TXT_SAVED = Messages.USR_OF_WELCOME_TXT_SAVED.getMessage();
-	private final String ALERT_TXT_SAVED = Messages.ALERT_TXT_SAVED.getMessage();
 	private final String USR_MATCH = Messages.USR_MATCH.getMessage();
 	private final String PASS_MATCH = Messages.PASS_MATCH.getMessage();
 	private final String WELCOME_TXT_VISIBLE = Messages.WELCOME_TXT_VISIBLE.getMessage();
 	private final String USR_OF_WELCOME_TXT_MATCH = Messages.USR_OF_WELCOME_TXT_MATCH.getMessage();
 	private final String ALERT_TXT_MATCH = Messages.ALERT_TXT_MATCH.getMessage();
-	private final String ALERT_ACCEPTED = Messages.ALERT_ACCEPTED.getMessage();
 	private final String USR_MISMATCH = Messages.USR_MISMATCH.getMessage();
 	private final String PASS_MISMATCH = Messages.PASS_MISMATCH.getMessage();
 	private final String WELCOME_TXT_NOT_VISIBLE = Messages.WELCOME_TXT_NOT_VISIBLE.getMessage();
@@ -70,11 +63,11 @@ public class Login {
 	private final String HANDLE_ASSERTION_ERROR = Messages.HANDLE_ASSERTION_ERROR.getMessage();
 	
 	// Data
-	private String usrActual = null;
-	private String passActual = null;
-	private Boolean isWelcomeTxtActualVisible = null;
-	private String usrOfWelcomeTxtActual = null;
-	private String alertTxtActual = null;
+	private String usr_actual = null;
+	private String pass_actual = null;
+	private Boolean is_welcome_txt_actual_visible = null;
+	private String usr_of_welcome_txt_actual = null;
+	private String alert_txt_actual = null;
 
 	// Reports
 	private ExtentReports report = null;
@@ -87,10 +80,10 @@ public class Login {
 
 		report = Report.configurate();
 
-		basePage = new BasePage(driver);
-		basePage.navigateTo(URL);
+		base_page = new BasePage(driver);
+		base_page.navigateTo(URL);
 
-		loginPage = new LoginPage();
+		login_page = new LoginPage();
 		
 	}
 	
@@ -110,23 +103,18 @@ public class Login {
 	private void login(ExtentTest test, String usr, String pass) {
 		test.log(Status.INFO, LOGIN);
 		
-		loginPage.clickLoginBtn();
+		login_page.clickLoginBtn();
 		
-		loginPage.completeUsr(usr);
-		usrActual = loginPage.getUsrFldContent();
-		test.log(Status.INFO, USR_COMPLETED);
+		login_page.completeUsr(usr);
+		usr_actual = login_page.getUsrFldContent();
+	
+		login_page.completePass(pass);
+		pass_actual = login_page.getPassFldContent();
 		
-		loginPage.completePass(pass);
-		passActual = loginPage.getPassFldContent();
-		test.log(Status.INFO, PASS_COMPLETED);
+		login_page.clickLoginBtn2();
 		
-		loginPage.clickLoginBtn2();
-		
-		isWelcomeTxtActualVisible = loginPage.isWelcomeTxtVisible();
-		test.log(Status.INFO, WELCOME_TXT_SAVED);
-		
-		usrOfWelcomeTxtActual = loginPage.getUsrOfWelcomeTxt();
-		test.log(Status.INFO, USR_OF_WELCOME_TXT_SAVED);
+		is_welcome_txt_actual_visible = login_page.isWelcomeTxtVisible();
+		usr_of_welcome_txt_actual = login_page.getUsrOfWelcomeTxtString();
 		
 		test.log(Status.INFO, LOGIN_COMPLETED);
 		
@@ -135,23 +123,19 @@ public class Login {
 	private void loginIncorrect(ExtentTest test, String usr, String pass) {
 		test.log(Status.INFO, LOGIN);
 		
-		loginPage.clickLoginBtn();
+		login_page.clickLoginBtn();
 		
-		loginPage.completeUsr(usr);
-		usrActual = loginPage.getUsrFldContent();
-		test.log(Status.INFO, USR_COMPLETED);
+		login_page.completeUsr(usr);
+		usr_actual = login_page.getUsrFldContent();
 		
-		loginPage.completePass(pass);
-		passActual = loginPage.getPassFldContent();
-		test.log(Status.INFO, PASS_COMPLETED);
+		login_page.completePass(pass);
+		pass_actual = login_page.getPassFldContent();
 		
-		loginPage.clickLoginBtn2();
+		login_page.clickLoginBtn2();
 		
-		alertTxtActual = loginPage.getAlertTxt();
-		test.log(Status.INFO, ALERT_TXT_SAVED);
+		alert_txt_actual = login_page.getAlertTextString();
 
-		loginPage.acceptAlert();
-		test.log(Status.INFO, ALERT_ACCEPTED);
+		login_page.acceptAlert();
 		
 		test.log(Status.INFO, LOGIN_INCORRECT_COMPLETED);
 		
@@ -160,16 +144,16 @@ public class Login {
 	private void validateLogin(ExtentTest test, String usr, String pass) {
 		test.log(Status.INFO, VALIDATE_LOGIN);
 		
-		assertEquals(usrActual, usr, USR_MISMATCH);
+		assertEquals(usr_actual, usr, USR_MISMATCH);
 		test.pass(USR_MATCH);
 		
-		assertEquals(passActual, pass, PASS_MISMATCH);
+		assertEquals(pass_actual, pass, PASS_MISMATCH);
 		test.pass(PASS_MATCH);
 		
-		assertTrue(isWelcomeTxtActualVisible, WELCOME_TXT_NOT_VISIBLE);
+		assertTrue(is_welcome_txt_actual_visible, WELCOME_TXT_NOT_VISIBLE);
 		test.pass(WELCOME_TXT_VISIBLE);
 		
-		assertEquals(usrOfWelcomeTxtActual, usr, USR_OF_WELCOME_TEXT_MISMATCH);
+		assertEquals(usr_of_welcome_txt_actual, usr, USR_OF_WELCOME_TEXT_MISMATCH);
 		test.pass(USR_OF_WELCOME_TXT_MATCH);
 		
 		test.pass(LOGIN_TEST_OK);
@@ -180,13 +164,13 @@ public class Login {
 	private void validateLoginIncorrect(ExtentTest test, String usr, String pass, String msg) {
 		test.log(Status.INFO, VALIDATE_LOGIN_INCORRECT);
 		
-		assertEquals(usrActual, usr, USR_MISMATCH);
+		assertEquals(usr_actual, usr, USR_MISMATCH);
 		test.pass(USR_MATCH);
 		
-		assertEquals(passActual, pass, PASS_MISMATCH);
+		assertEquals(pass_actual, pass, PASS_MISMATCH);
 		test.pass(PASS_MATCH);
 		
-		assertEquals(alertTxtActual, msg, ALERT_TXT_MISMATCH);
+		assertEquals(alert_txt_actual, msg, ALERT_TXT_MISMATCH);
 		test.pass(ALERT_TXT_MATCH);
 		
 		test.pass(LOGIN_INCORRECT_TEST_OK);

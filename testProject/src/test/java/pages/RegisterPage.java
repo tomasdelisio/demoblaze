@@ -20,9 +20,10 @@ public class RegisterPage extends BasePage {
 	private static final String value = "value";
 
 	// Variables
-	private boolean isVisible = false;
-	private String alert_txt = null;
-	private String user_content = null;
+	private boolean is_visible = false;
+	private boolean is_clickable = false;
+	private String alert_text = null;
+	private String usr_content = null;
 	private String pass_content = null;
 	private static final String register_btn_id = "Register Button";
 	private static final String usr_fld_id = "User Field";
@@ -30,7 +31,7 @@ public class RegisterPage extends BasePage {
 	private static final String register_btn_2_id = "Register Button 2";
 	private static final String alert_id = "Alert";
 
-	// Constructor
+	/*** CONSTRUCTOR ***/
 	public RegisterPage() {
 		super(driver);
 		
@@ -70,43 +71,31 @@ public class RegisterPage extends BasePage {
 	}
 
 	// Visible
-	public boolean isRegisterBtnVisible() {
-		if (elementVisible(register_btn, register_btn_id) != null) {
-			isVisible = true;
-			
-		}
+	public boolean isRegisterBtnClickable() {
+		is_clickable = elementToBeClickable(register_btn, register_btn_id);
 
-		return isVisible;
+		return is_clickable;
 		
 	}
 
 	public boolean isUsrFldVisible() {
-		if (elementVisible(usr_fld, usr_fld_id) != null) {
-			isVisible = true;
-			
-		}
+		is_visible = elementVisible(usr_fld, usr_fld_id);
 
-		return isVisible;
+		return is_visible;
 		
 	}
 
 	public boolean isPassFldVisible() {
-		if (elementVisible(pass_fld, pass_fld_id) != null) {
-			isVisible = true;
-			
-		}
+		is_visible = elementVisible(pass_fld, pass_fld_id);
 
-		return isVisible;
+		return is_visible;
 		
 	}
 
 	public boolean isRegisterBtn2Visible() {
-		if (elementVisible(register_btn_2, register_btn_2_id) != null) {
-			isVisible = true;
-			
-		}
+		is_clickable = elementVisible(register_btn_2, register_btn_2_id);
 
-		return isVisible;
+		return is_clickable;
 		
 	}
 	
@@ -127,10 +116,10 @@ public class RegisterPage extends BasePage {
 	}
 	
 	public String getUsrFldContent() {
-		user_content = getAttribute(usr_fld, usr_fld_id, value);
+		usr_content = getAttribute(usr_fld, usr_fld_id, value);
 				
-		return user_content;
-		
+		return usr_content;
+	
 	}
 
 	public void setUsrFld(WebElement usr_fld) {
@@ -140,6 +129,13 @@ public class RegisterPage extends BasePage {
 
 	public WebElement getPassFld() {
 		return pass_fld;
+		
+	}
+	
+	public String getPassFldContent() {
+		pass_content = getAttribute(pass_fld, pass_fld_id, value);
+				
+		return pass_content;
 		
 	}
 
@@ -157,26 +153,60 @@ public class RegisterPage extends BasePage {
 		this.register_btn_2 = register_btn_2;
 		
 	}
-
-	public boolean isVisible() {
-		return isVisible;
+	
+	public String getValue() {
+		return value;
 		
 	}
 
-	public void setVisible(boolean isVisible) {
-		this.isVisible = isVisible;
+	public boolean getIsVisible() {
+		return is_visible;
 		
 	}
 
-	public String getAlertTxt() {
-		alert_txt = getAlertText(alert_id);
+	public void setIsVisible(boolean is_visible) {
+		this.is_visible = is_visible;
 		
-		return alert_txt;
+	}
+	
+	public boolean getIsClickable() {
+		return is_clickable;
 		
 	}
 
-	public void setAlertTxt(String alert_txt) {
-		this.alert_txt = alert_txt;
+	public void setIsClickable(boolean is_clickable) {
+		this.is_clickable = is_clickable;
+		
+	}
+	
+	public String getAlertText() {
+		return alert_text;
+	}
+
+	public String getAlertTextString() {
+		alert_text = getAlertText(alert_id);
+		
+		return alert_text;
+		
+	}
+
+	public void setAlertText(String alert_text) {
+		this.alert_text = alert_text;
+		
+	}
+	
+	public String getUsrContent() {
+		return usr_content;
+		
+	}
+	
+	public void setUsrContent(String usr_content) {
+		this.usr_content = usr_content;
+		
+	}
+	
+	public String getPassContent() {
+		return pass_content;
 		
 	}
 
@@ -192,13 +222,6 @@ public class RegisterPage extends BasePage {
 
 	public static String getPassFldId() {
 		return pass_fld_id;
-		
-	}
-	
-	public String getPassFldContent() {
-		pass_content = getAttribute(pass_fld, pass_fld_id, value);
-				
-		return pass_content;
 		
 	}
 	
