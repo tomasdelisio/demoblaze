@@ -1,0 +1,52 @@
+package driver;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+
+public class Driver {
+	/*** VARIABLES ***/
+	// Driver
+	private static WebDriver driver;
+
+	// Logger
+	private static Logger logger = LogManager.getLogger(Driver.class);
+
+	/*** METHODS ***/
+	// Driver configuration
+	public static WebDriver configurate() {
+		logger.info("Driver Configuration Started");
+
+		logger.info("Searching Driver");
+		// WINDOWS
+		System.setProperty("webdriver.chrome.driver", "src/test/resources/driver/chromedriver/135/chromedriver.exe");
+		
+		// LINUX
+		// System.setProperty("webdriver.chrome.driver", "");
+
+		logger.info("ChromeOptions Configuration Started");
+		ChromeOptions options = new ChromeOptions();
+
+		options.addArguments("--remote-allow-origins=*");
+		options.addArguments("--start-maximized");
+
+		logger.info("ChromeOptions Configuration Terminated");
+
+		driver = new ChromeDriver(options);
+
+		logger.info("Driver Configuration Terminated");
+
+		return driver;
+
+	}
+
+	// Close connection
+	public static void finish() {
+		driver.quit();
+
+		logger.info("Driver quit");
+		
+	}
+}

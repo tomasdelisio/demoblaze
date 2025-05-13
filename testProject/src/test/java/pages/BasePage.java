@@ -4,7 +4,6 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -13,7 +12,7 @@ public class BasePage {
 	// Driver
 	public static WebDriver driver;
 
-	// Constructor
+	/*** CONSTRUCTOR ***/
 	public BasePage(WebDriver driver) {
 		BasePage.driver = driver;
 		PageFactory.initElements(driver, this);
@@ -28,14 +27,14 @@ public class BasePage {
 	}
 
 	public void click(WebElement element, String id) {
-		if (elementToBeClickable(element, id) != null) {
+		if (elementToBeClickable(element, id)) {
 			element.click();
 			
 		}
 	}
 
 	public void type(String text, WebElement element, String id) {
-		if (elementVisible(element, id) != null) {
+		if (elementVisible(element, id)) {
 			element.sendKeys(text);
 			
 		}
@@ -43,7 +42,7 @@ public class BasePage {
 
 	// Alerts
 	public void switchToFrame(WebElement element, String id) {
-		if (elementVisible(element, id) != null) {
+		if (elementVisible(element, id)) {
 			driver.switchTo().frame(element);
 			
 		}
@@ -52,7 +51,7 @@ public class BasePage {
 	public void acceptAlert(String id) {
 		Alert alert = null;
 		
-		if (alertIsPresent(id) != null) {
+		if (alertIsPresent(id)) {
 			alert = switchToAlert(id);
 
 			alert.accept();
@@ -63,7 +62,7 @@ public class BasePage {
 	public void cancelAlert(String id) {
 		Alert alert = null;
 		
-		if (alertIsPresent(id) != null) {
+		if (alertIsPresent(id)) {
 			alert = switchToAlert(id);
 			
 			alert.dismiss();
@@ -74,7 +73,7 @@ public class BasePage {
 	public Alert switchToAlert(String id) {
 		Alert alert = null;
 		
-		if (alertIsPresent(id) != null) {
+		if (alertIsPresent(id)) {
 			alert = driver.switchTo().alert();
 			
 		}
@@ -85,125 +84,129 @@ public class BasePage {
 
 	// Clear
 	public void clear(WebElement element, String id) {
-		if (elementVisible(element, id) != null) {
+		if (elementVisible(element, id)) {
 			element.clear();
 			
 		}
 	}
 
 	// Validations
-	public static ExpectedCondition<WebElement> elementToBeClickable(WebElement element, String id) {
+	public static Boolean elementToBeClickable(WebElement element, String id) {
 	    try {
 	        new WebDriverWait(driver, java.time.Duration.ofSeconds(10))
 	                .until(ExpectedConditions.elementToBeClickable(element));
 	        
-	        return ExpectedConditions.elementToBeClickable(element);
+	        return true;
 	        
 	    } catch (org.openqa.selenium.TimeoutException e) {
 	    	
 	        System.err.println("Error: El tiempo de espera para el elemento '" + id + "' ha expirado.");
 	        
-	        return null;
+	        return false;
 	        
 	    } catch (org.openqa.selenium.NoSuchElementException e) {
 
 	    	System.err.println("Error: El elemento '" + id + "' no fue encontrado.");
 	        
-	    	return null;
+	    	return false;
 	        
 	    } catch (Exception e) {
 
 	    	System.err.println("Error inesperado: El elemento '" + id + "' " + e.getMessage());
 	        
-	    	return null;
+	    	return false;
 	        
 	    }
 	}
 
-	public static ExpectedCondition<Boolean> elementVisible(WebElement element, String id) {
+	public static Boolean elementVisible(WebElement element, String id) {
 		try {
 
 			new WebDriverWait(driver, java.time.Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOf(element));
 
-			return ExpectedConditions.invisibilityOf(element);
+			return true;
 			
 		} catch (org.openqa.selenium.TimeoutException e) {
 	    	
 	        System.err.println("Error: El tiempo de espera para el elemento '" + id + "' ha expirado.");
 	        
-	        return null;
+	        return false;
 	        
 	    } catch (org.openqa.selenium.NoSuchElementException e) {
 
 	    	System.err.println("Error: El elemento '" + id + "' no fue encontrado.");
 	        
-	    	return null;
+	    	return false;
 	        
 	    } catch (Exception e) {
 
 	    	System.err.println("Error inesperado: El elemento '" + id + "' " + e.getMessage());
 	        
-	    	return null;
+	    	return false;
 	        
 	    }
 	}
 
-	public static ExpectedCondition<Boolean> elementToBeSelected(WebElement element, String id) {
+	public static Boolean elementToBeSelected(WebElement element, String id) {
 		try {
 			new WebDriverWait(driver, java.time.Duration.ofSeconds(10))
 					.until(ExpectedConditions.elementToBeSelected(element));
 
-			return ExpectedConditions.elementToBeSelected(element);
+			return true;
 			
 		} catch (org.openqa.selenium.TimeoutException e) {
 	    	
 	        System.err.println("Error: El tiempo de espera para el elemento '" + id + "' ha expirado.");
 	        
-	        return null;
+	        return false;
 	        
 	    } catch (org.openqa.selenium.NoSuchElementException e) {
 
 	    	System.err.println("Error: El elemento '" + id + "' no fue encontrado.");
 	        
-	    	return null;
+	    	return false;
 	    	
 	    } catch (Exception e) {
 
 	    	System.err.println("Error inesperado: El elemento '" + id + "' " + e.getMessage());
 	        
-	    	return null;
+	    	return false;
 	    	
 	    }
 	}
 
-	public static ExpectedCondition<Alert> alertIsPresent(String id) {
+	public static Boolean alertIsPresent(String id) {
 		try {
 			new WebDriverWait(driver, java.time.Duration.ofSeconds(10)).until(ExpectedConditions.alertIsPresent());
 
-			return ExpectedConditions.alertIsPresent();
+			return true;
 			
 		} catch (org.openqa.selenium.TimeoutException e) {
 	    	
 	        System.err.println("Error: El tiempo de espera para el elemento '" + id + "' ha expirado.");
 	        
-	        return null;
+	        return false;
 	        
 	    } catch (org.openqa.selenium.NoSuchElementException e) {
 
 	    	System.err.println("Error: El elemento '" + id + "' no fue encontrado.");
 	        
-	    	return null;
+	    	return false;
 	    	
 	    } catch (Exception e) {
 
 	    	System.err.println("Error inesperado: El elemento '" + id + "' " + e.getMessage());
 	        
-	    	return null;
+	    	return false;
 	    	
 	    }
 	}
+	
+	// Getter And Setter
+	public WebDriver getDriver() {
+		return driver;
+	}
 
-	// Getter
 	public WebElement getElement(WebElement element, String id) {
 		if (elementVisible(element, id) != null) {
 			return element;
@@ -252,4 +255,5 @@ public class BasePage {
 		return element_attribute;
 		
 	}
+	
 }

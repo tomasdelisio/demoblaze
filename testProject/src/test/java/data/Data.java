@@ -13,16 +13,16 @@ public class Data {
 	public Object[][] data(String path, String sheet) {
 		new ExcelUtils(path, sheet);
 
-		int rowCount = ExcelUtils.getRowCount();
-		int colCount = ExcelUtils.getColCount();
+		int row_count = ExcelUtils.getRowCount();
+		int col_count = ExcelUtils.getColCount();
 
-		Object dt[][] = new Object[rowCount - 1][colCount];
+		Object dt[][] = new Object[row_count - 1][col_count];
 
-		for (int i = 1; i < rowCount; i++) {
-			for (int j = 0; j < colCount; j++) {
-				String cellData = ExcelUtils.getCellData(i, j);
+		for (int i = 1; i < row_count; i++) {
+			for (int j = 0; j < col_count; j++) {
+				String cell_data = ExcelUtils.getCellData(i, j);
 
-				dt[i - 1][j] = cellData;
+				dt[i - 1][j] = cell_data;
 			}
 		}
 

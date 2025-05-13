@@ -1,6 +1,5 @@
 package pages;
 
-//import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -22,12 +21,15 @@ public class LoginPage extends BasePage {
 	private static final String value = "value";
 
 	// Variables
-	private boolean isVisible = false;
+	private boolean is_visible = false;
+	private boolean is_clickable = false;
 	private String alert_text = null;
 	private String welcome_text = null;
-	private String welcome_usr_txt = null;
+	private String welcome_usr_text = null;
 	private String usr_content = null;
 	private String pass_content = null;
+	
+	// ID
 	private static final String login_btn_id = "Login Button";
 	private static final String usr_fld_id = "User Field";
 	private static final String pass_fld_id = "Password Field";
@@ -35,7 +37,7 @@ public class LoginPage extends BasePage {
 	private static final String welcome_txt_id = "'WELCOME' Text";
 	private static final String alert_id = "Alert";
 
-	// Constructor
+	/*** CONSTRUCTOR ***/
 	public LoginPage() {
 		super(driver);
 		
@@ -74,54 +76,39 @@ public class LoginPage extends BasePage {
 		
 	}
 
-	// Visible
-	public boolean isLoginBtnVisible() {
-		if (elementVisible(login_btn, login_btn_id) != null) {
-			isVisible = true;
-			
-		}
-
-		return isVisible;
+	// Visible / Clickable
+	public boolean isLoginBtnClickable() {
+		is_clickable = elementToBeClickable(login_btn, login_btn_id);
+		
+		return is_clickable;
 		
 	}
 
 	public boolean isUsrFldVisible() {
-		if (elementVisible(usr_fld, usr_fld_id) != null) {
-			isVisible = true;
-			
-		}
+		is_visible = elementVisible(usr_fld, usr_fld_id);
 
-		return isVisible;
+		return is_visible;
 		
 	}
 
 	public boolean isPassFldVisible() {
-		if (elementVisible(pass_fld, pass_fld_id) != null) {
-			isVisible = true;
-			
-		}
+		is_visible = elementVisible(pass_fld, pass_fld_id);
 
-		return isVisible;
+		return is_visible;
 		
 	}
 
-	public boolean isLoginBtn2Visible() {
-		if (elementVisible(login_btn_2, login_btn_2_id) != null) {
-			isVisible = true;
-			
-		}
+	public boolean isLoginBtn2Clickable() {
+		is_clickable = elementToBeClickable(login_btn_2, login_btn_2_id);
 
-		return isVisible;
+		return is_clickable;
 		
 	}
 
 	public boolean isWelcomeTxtVisible() {
-		if (elementVisible(welcome_txt, welcome_txt_id) != null) {
-			isVisible = true;
-			
-		}
+		is_visible = elementVisible(welcome_txt, welcome_txt_id);
 
-		return isVisible;
+		return is_visible;
 		
 	}
 	
@@ -158,6 +145,13 @@ public class LoginPage extends BasePage {
 		
 	}
 	
+	public String getPassFldContent() {
+		pass_content = getAttribute(pass_fld, pass_fld_id, value);
+
+		return pass_content;
+		
+	}
+	
 	public void setPassFld(WebElement pass_fld) {
 		this.pass_fld = pass_fld;
 		
@@ -173,38 +167,62 @@ public class LoginPage extends BasePage {
 		
 	}
 	
-	public String getWelcomeTxt() {
+	public WebElement getWelcomeTxt() {
+		return welcome_txt;
+	}
+	
+	public String getWelcomeTxtString() {
 		welcome_text = getText(welcome_txt, welcome_txt_id);
 		
 		return welcome_text;
 		
 	}
 	
-	public String getUsrOfWelcomeTxt() {
-		String text = getWelcomeTxt();
-		
-		welcome_usr_txt = text.substring(text.indexOf(" ") + 1);
-		
-		return welcome_usr_txt;
-		
-	}
-
 	public void setWelcomeTxt(WebElement welcome_txt) {
 		this.welcome_txt = welcome_txt;
 		
 	}
-
-	public boolean isVisible() {
-		return isVisible;
+	
+	public String getUsrOfWelcomeTxtString() {
+		String text = getWelcomeTxtString();
+		
+		welcome_usr_text = text.substring(text.indexOf(" ") + 1);
+		
+		return welcome_usr_text;
 		
 	}
 
-	public void setVisible(boolean isVisible) {
-		this.isVisible = isVisible;
+	public String getValue() {
+		return value;
+		
+	}
+
+	public boolean getIsVisible() {
+		return is_visible;
+		
+	}
+
+	public void setIsVisible(boolean is_visible) {
+		this.is_visible = is_visible;
 		
 	}
 	
-	public String getAlertTxt() {
+	public boolean getIsClickable() {
+		return is_clickable;
+		
+	}
+
+	public void setIsClickable(boolean is_clickable) {
+		this.is_clickable = is_clickable;
+		
+	}
+	
+	public String getAlertText() {
+		return alert_text;
+		
+	}
+	
+	public String getAlertTextString() {
 		alert_text = getAlertText(alert_id);
 		
 		return alert_text;
@@ -213,6 +231,46 @@ public class LoginPage extends BasePage {
 
 	public void setAlertText(String alert_text) {
 		this.alert_text = alert_text;
+		
+	}
+	
+	public String getWelcomeText() {
+		return welcome_text;
+		
+	}
+
+	public void setWelcomeText(String welcome_text) {
+		this.welcome_text = welcome_text;
+		
+	}
+	
+	public String getWelcomeUsrText() {
+		return welcome_usr_text;
+		
+	}
+
+	public void setWelcomeUsrText(String welcome_usr_text) {
+		this.welcome_usr_text = welcome_usr_text;
+		
+	}
+	
+	public String getUsrContent() {
+		return usr_content;
+		
+	}
+	
+	public void setUsrContent(String usr_content) {
+		this.usr_content = usr_content;
+		
+	}
+	
+	public String getPassContent() {
+		return pass_content;
+		
+	}
+	
+	public void setPassContent(String pass_content) {
+		this.pass_content = pass_content;
 		
 	}
 
@@ -228,13 +286,6 @@ public class LoginPage extends BasePage {
 
 	public static String getPassFldId() {
 		return pass_fld_id;
-		
-	}
-	
-	public String getPassFldContent() {
-		pass_content = getAttribute(pass_fld, pass_fld_id, value);
-
-		return pass_content;
 		
 	}
 
