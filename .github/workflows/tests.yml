@@ -32,7 +32,6 @@ jobs:
 
       - name: Ejecutar tests con testng.xml
         run: mvn clean test -DsuiteXmlFile=testng.xml
-        working-directory: ./testProject
         
       - name: Upload test report
         uses: actions/upload-artifact@v4
