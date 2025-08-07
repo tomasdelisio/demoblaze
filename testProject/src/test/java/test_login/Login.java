@@ -32,36 +32,6 @@ public class Login {
 	// URL
 	private static final String URL = "https://www.demoblaze.com/index.html";
 	
-	// Messages Login
-	private final String LOGIN_TEST_START = MessagesLogin.LOGIN_TEST_START.getMessage();
-	private final String LOGIN = MessagesLogin.LOGIN.getMessage(); 
-	private final String LOGIN_COMPLETED = MessagesLogin.LOGIN_COMPLETED.getMessage();
-	private final String LOGIN_INCORRECT_COMPLETED = MessagesLogin.LOGIN_INCORRECT_COMPLETED.getMessage();
-	private final String VALIDATE_LOGIN = MessagesLogin.VALIDATE_LOGIN.getMessage();
-	private final String VALIDATE_LOGIN_INCORRECT = MessagesLogin.VALIDATE_LOGIN_INCORRECT.getMessage();
-	private final String LOGIN_TEST_OK = MessagesLogin.LOGIN_TEST_OK.getMessage();
-	private final String LOGIN_INCORRECT_TEST_OK = MessagesLogin.LOGIN_INCORRECT_TEST_OK.getMessage();
-	private final String LOGIN_TEST_ERROR = MessagesLogin.LOGIN_TEST_ERROR.getMessage();
-	private final String LOGIN_TEST_FINISH = MessagesLogin.LOGIN_TEST_FINISH.getMessage();
-	
-	// Messages
-	private final String USR_MATCH = Messages.USR_MATCH.getMessage();
-	private final String PASS_MATCH = Messages.PASS_MATCH.getMessage();
-	private final String WELCOME_TXT_VISIBLE = Messages.WELCOME_TXT_VISIBLE.getMessage();
-	private final String USR_OF_WELCOME_TXT_MATCH = Messages.USR_OF_WELCOME_TXT_MATCH.getMessage();
-	private final String ALERT_TXT_MATCH = Messages.ALERT_TXT_MATCH.getMessage();
-	private final String USR_MISMATCH = Messages.USR_MISMATCH.getMessage();
-	private final String PASS_MISMATCH = Messages.PASS_MISMATCH.getMessage();
-	private final String WELCOME_TXT_NOT_VISIBLE = Messages.WELCOME_TXT_NOT_VISIBLE.getMessage();
-	private final String USR_OF_WELCOME_TEXT_MISMATCH = Messages.USR_OF_WELCOME_TXT_MISMATCH.getMessage();
-	private final String ALERT_TXT_MISMATCH = Messages.ALERT_TXT_MISMATCH.getMessage();
-	private final String USR_DOES_NOT_EXIST = Messages.USR_DOES_NOT_EXIST.getMessage();
-	private final String WRONG_PASS = Messages.WRONG_PASS.getMessage();
-	private final String USR_PASS_NULL = Messages.USR_PASS_NULL.getMessage();
-	
-	// Messages Assertion
-	private final String HANDLE_ASSERTION_ERROR = Messages.HANDLE_ASSERTION_ERROR.getMessage();
-	
 	// Data
 	private String usr_actual = null;
 	private String pass_actual = null;
@@ -89,19 +59,19 @@ public class Login {
 	
 	// Testing Methods
 	private void startTest(ExtentTest test, String usr) {
-		test.log(Status.INFO, LOGIN_TEST_START + "\nUsuario: " + usr);
-		System.out.println(LOGIN_TEST_START + "\nUsuario: " + usr + "\n");
+		test.log(Status.INFO, MessagesLogin.LOGIN_TEST_START.getMessage() + "\nUsuario: " + usr);
+		System.out.println(MessagesLogin.LOGIN_TEST_START.getMessage() + "\nUsuario: " + usr + "\n");
 		
 	}
 	
 	private void finishTest(ExtentTest test, String usr) {
-		test.log(Status.INFO, LOGIN_TEST_FINISH + "\nUsuario: " + usr);
-		System.out.println(LOGIN_TEST_FINISH + "\nUsuario: " + usr + "\n");
+		test.log(Status.INFO, MessagesLogin.LOGIN_TEST_FINISH.getMessage() + "\nUsuario: " + usr);
+		System.out.println(MessagesLogin.LOGIN_TEST_FINISH.getMessage() + "\nUsuario: " + usr + "\n");
 		
 	}
 	
 	private void login(ExtentTest test, String usr, String pass) {
-		test.log(Status.INFO, LOGIN);
+		test.log(Status.INFO, MessagesLogin.LOGIN.getMessage());
 		
 		login_page.clickLoginBtn();
 		
@@ -116,12 +86,12 @@ public class Login {
 		is_welcome_txt_actual_visible = login_page.isWelcomeTxtVisible();
 		usr_of_welcome_txt_actual = login_page.getUsrOfWelcomeTxtString();
 		
-		test.log(Status.INFO, LOGIN_COMPLETED);
+		test.log(Status.INFO, MessagesLogin.LOGIN_COMPLETED.getMessage());
 		
 	}
 	
 	private void loginIncorrect(ExtentTest test, String usr, String pass) {
-		test.log(Status.INFO, LOGIN);
+		test.log(Status.INFO, MessagesLogin.LOGIN.getMessage());
 		
 		login_page.clickLoginBtn();
 		
@@ -137,54 +107,55 @@ public class Login {
 
 		login_page.acceptAlert();
 		
-		test.log(Status.INFO, LOGIN_INCORRECT_COMPLETED);
+		test.log(Status.INFO, MessagesLogin.LOGIN_INCORRECT_COMPLETED.getMessage());
 		
 	}
 	
 	private void validateLogin(ExtentTest test, String usr, String pass) {
-		test.log(Status.INFO, VALIDATE_LOGIN);
+		test.log(Status.INFO, MessagesLogin.VALIDATE_LOGIN.getMessage());
 		
-		assertEquals(usr_actual, usr, USR_MISMATCH);
-		test.pass(USR_MATCH);
+		assertEquals(usr_actual, usr, Messages.USR_MISMATCH.getMessage());
+		test.pass(Messages.USR_MATCH.getMessage());
 		
-		assertEquals(pass_actual, pass, PASS_MISMATCH);
-		test.pass(PASS_MATCH);
+		assertEquals(pass_actual, pass, Messages.PASS_MISMATCH.getMessage());
+		test.pass(Messages.PASS_MATCH.getMessage());
 		
-		assertTrue(is_welcome_txt_actual_visible, WELCOME_TXT_NOT_VISIBLE);
-		test.pass(WELCOME_TXT_VISIBLE);
+		assertTrue(is_welcome_txt_actual_visible, Messages.WELCOME_TXT_NOT_VISIBLE.getMessage());
+		test.pass(Messages.WELCOME_TXT_VISIBLE.getMessage());
 		
-		assertEquals(usr_of_welcome_txt_actual, usr, USR_OF_WELCOME_TEXT_MISMATCH);
-		test.pass(USR_OF_WELCOME_TXT_MATCH);
+		assertEquals(usr_of_welcome_txt_actual, usr, Messages.USR_OF_WELCOME_TXT_MISMATCH.getMessage());
+		test.pass(Messages.USR_OF_WELCOME_TXT_MATCH.getMessage());
 		
-		test.pass(LOGIN_TEST_OK);
-		System.out.println(LOGIN_TEST_OK + "\nUsuario: " + usr + "\n");
+		test.pass(MessagesLogin.LOGIN_TEST_OK.getMessage());
+		System.out.println(MessagesLogin.LOGIN_TEST_OK.getMessage() + "\nUsuario: " + usr + "\n");
 		
 	}
 	
 	private void validateLoginIncorrect(ExtentTest test, String usr, String pass, String msg) {
-		test.log(Status.INFO, VALIDATE_LOGIN_INCORRECT);
+		test.log(Status.INFO, MessagesLogin.VALIDATE_LOGIN_INCORRECT.getMessage());
 		
-		assertEquals(usr_actual, usr, USR_MISMATCH);
-		test.pass(USR_MATCH);
+		assertEquals(usr_actual, usr, Messages.USR_MISMATCH.getMessage());
+		test.pass(Messages.USR_MATCH.getMessage());
 		
-		assertEquals(pass_actual, pass, PASS_MISMATCH);
-		test.pass(PASS_MATCH);
+		assertEquals(pass_actual, pass, Messages.PASS_MISMATCH.getMessage());
+		test.pass(Messages.PASS_MATCH.getMessage());
 		
-		assertEquals(alert_txt_actual, msg, ALERT_TXT_MISMATCH);
-		test.pass(ALERT_TXT_MATCH);
+		assertEquals(alert_txt_actual, msg, Messages.ALERT_TXT_MISMATCH.getMessage());
+		test.pass(Messages.ALERT_TXT_MATCH.getMessage());
 		
-		test.pass(LOGIN_INCORRECT_TEST_OK);
-		System.out.println(LOGIN_INCORRECT_TEST_OK + "\nUsuario: " + usr + "\n");
+		test.pass(MessagesLogin.LOGIN_INCORRECT_TEST_OK.getMessage());
+		System.out.println(MessagesLogin.LOGIN_INCORRECT_TEST_OK.getMessage() + "\nUsuario: " + usr + "\n");
 		
 	}
 	
 	private void handleAssertionError(ExtentTest test, String usr, AssertionError e) {
-		test.log(Status.INFO, HANDLE_ASSERTION_ERROR);
+		test.log(Status.INFO, Messages.HANDLE_ASSERTION_ERROR.getMessage());
 		
-		test.addScreenCaptureFromPath("screenshot.png");
+		//String screenshotPath = ScreenshotUtils.capture(driver, usr); 
+		//test.addScreenCaptureFromPath(screenshotPath); CODEAR MÉTODO DE CAPTURA DE IMAGENES
 		
-		test.fail(LOGIN_TEST_ERROR + "\nUsuario: " + usr + " \nERROR: " + e.getMessage());
-		System.out.println(LOGIN_TEST_ERROR + "\nUsuario: " + usr + " \nERROR: " + e.getMessage() + "\n");
+		test.fail(MessagesLogin.LOGIN_TEST_ERROR.getMessage() + "\nUsuario: " + usr + " \nERROR: " + e.getMessage());
+		System.out.println(MessagesLogin.LOGIN_TEST_ERROR.getMessage() + "\nUsuario: " + usr + " \nERROR: " + e.getMessage() + "\n");
 		
 	}
 
@@ -218,13 +189,13 @@ public class Login {
 		loginIncorrect(test, usr, pass);
 		
 		try {
-			validateLoginIncorrect(test, usr, pass, USR_DOES_NOT_EXIST);
+			validateLoginIncorrect(test, usr, pass, Messages.USR_DOES_NOT_EXIST.getMessage());
 
 		} catch (AssertionError e) {
 			handleAssertionError(test, usr, e);
 			
 		} finally {
-			finishTest();
+			finishTest(test, usr);
 			
 		}
 
@@ -239,13 +210,13 @@ public class Login {
 		loginIncorrect(test, usr, pass);
 
 		try {
-			validateLoginIncorrect(test, usr, pass, WRONG_PASS);
+			validateLoginIncorrect(test, usr, pass, Messages.WRONG_PASS.getMessage());
 
 		} catch (AssertionError e) {
 			handleAssertionError(test, usr, e);
 			
 		} finally {
-			finishTest();
+			finishTest(test, usr);
 			
 		}
 
@@ -260,13 +231,13 @@ public class Login {
 		loginIncorrect(test, usr, pass);
 
 		try {
-			validateLoginIncorrect(test, usr, pass, USR_PASS_NULL);
+			validateLoginIncorrect(test, usr, pass, Messages.USR_PASS_NULL.getMessage());
 
 		} catch (AssertionError e) {
 			handleAssertionError(test, usr, e);
 			
 		} finally {
-			finishTest();
+			finishTest(test, usr);
 			
 		}
 
@@ -281,23 +252,31 @@ public class Login {
 		loginIncorrect(test, usr, pass);
 
 		try {
-			validateLoginIncorrect(test, usr, pass, USR_PASS_NULL);
+			validateLoginIncorrect(test, usr, pass, Messages.USR_PASS_NULL.getMessage());
 
 		} catch (AssertionError e) {
 			handleAssertionError(test, usr, e);
 			
 		} finally {
-			finishTest();
+			finishTest(test, usr);
 			
 		}
 	}
 	
 	// Test Post-Config
 	@AfterMethod
-	public void finishTest() {
-		report.flush();
+	public void finishTests() {
+		try {
+			report.flush();
+		} catch (Exception e) {
+			System.out.println("Error al cerrar el reporte: " + e.getMessage());
+		}
 
-		Driver.finish();
+		try {
+			Driver.finish();
+		} catch (Exception e) {
+			System.out.println("Error al cerrar el driver: " + e.getMessage());
+		}
 		
 	}
 }

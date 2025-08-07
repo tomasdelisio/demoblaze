@@ -1,0 +1,150 @@
+package test_login_api;
+
+import static org.testng.Assert.assertEquals;
+
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
+
+import api.AuthClient;
+import data.Data;
+import io.restassured.response.Response;
+import report.Report;
+import utils.Messages;
+import utils.MessagesLoginAPI;
+
+public class LoginAPI {	
+	// Reports
+	private ExtentReports report = null;
+
+	/*** METHODS ***/
+	// Test Pre-Config
+	@BeforeMethod
+	public void configurateTest() {
+		report = Report.configurate();
+		
+	}
+	
+	// Testing Methods
+	private void startTest(ExtentTest test, String usr) {
+		test.log(Status.INFO, MessagesLoginAPI.LOGIN_API_TEST_START.getMessage() + "\nUsuario: " + usr);
+		System.out.println(MessagesLoginAPI.LOGIN_API_TEST_START.getMessage() + "\nUsuario: " + usr + "\n");
+		
+	}
+	
+	private void finishTest(ExtentTest test, String usr) {
+		test.log(Status.INFO, MessagesLoginAPI.LOGIN_API_TEST_FINISH.getMessage() + "\nUsuario: " + usr);
+		System.out.println(MessagesLoginAPI.LOGIN_API_TEST_FINISH.getMessage() + "\nUsuario: " + usr + "\n");
+		
+	}
+	
+	private Response loginAPI(ExtentTest test, String usr, String pass, String msg, Response rs) {
+		test.log(Status.INFO, MessagesLoginAPI.LOGIN_API.getMessage());	
+		
+		rs = AuthClient.login(usr, pass);
+		
+		test.log(Status.INFO, msg);
+		
+		return rs;
+	}
+	
+	private void validateLoginAPI(ExtentTest test, String usr, String pass, String msg, String msg2, String msg3, Response response) {
+		test.log(Status.INFO, msg3);
+		
+        assertEquals(response.getStatusCode(), 200, CODE_MISMATCH);
+        test.pass(Messages.CODE_MATCH.getMessage());
+
+        String rs = response.asString().trim();
+       
+        assertEquals(rs, msg, RESPONSE_MISMATCH);
+        test.pass(RESPONSE_MATCH);
+		
+		test.pass(msg2);
+		System.out.println(msg2 + "\nUsuario: " + usr + "\n");
+		
+	}
+	
+	private void handleAssertionError(ExtentTest test, String usr, AssertionError e) {
+		test.log(Status.INFO, HANDLE_ASSERTION_ERROR);
+		
+		test.addScreenCaptureFromPath("screenshot.png");
+		
+		test.fail(LOGIN_API_TEST_ERROR + "\nUsuario: " + usr + " \nERROR: " + e.getMessage());
+		System.out.println(LOGIN_API_TEST_ERROR + "\nUsuario: " + usr + " \nERROR: " + e.getMessage() + "\n");
+		
+	}
+	
+	@Test(dataProvider = "LoginAPI", dataProviderClass = Data.class, priority = 1)
+	public void loginAPIOK(String usr, String pass) {
+		ExtentTest test = report.createTest("Login API Test");
+		Response rs = null;
+		
+		startTest(test, usr);
+		
+		rs = loginAPI(test, usr, pass, LOGIN_API_COMPLETED, rs);
+		
+		try {
+			validateLoginAPI(test, usr, pass, LOGIN_API_OK, LOGIN_API_TEST_OK, VALIDATE_LOGIN_API, rs);
+		}catch (AssertionError e) {
+			handleAssertionError(test, usr, e);
+		}finally {
+			finishTest(test, usr);
+		}
+	}
+	
+	@Test(dataProvider = "LoginUsernameIncorrectAPI", dataProviderClass = Data.class, priority = 2)
+	public void loginUsrIncorrectAPI(String usr, String pass) {
+		ExtentTest test = report.createTest("Login Username Incorrect API Test");
+		Response rs = null;
+
+		startTest(test, usr);
+		
+		rs = loginAPI(test, usr, pass, LOGIN_API_INCORRECT_COMPLETED, rs);
+		
+		try {
+			validateLoginAPI(test, usr, pass, USR_DOES_NOT_EXIST_API, LOGIN_API_INCORRECT_TEST_OK, VALIDATE_LOGIN_API_INCORRECT, rs);
+
+		} catch (AssertionError e) {
+			handleAssertionError(test, usr, e);
+			
+		} finally {
+			finishTest();
+			
+		}
+
+	}
+	
+	@Test(dataProvider = "LoginPasswordIncorrectAPI", dataProviderClass = Data.class, priority = 3)
+	public void loginPassIncorrectAPI(String usr, String pass) {
+		ExtentTest test = report.createTest("Login Password Incorrect API Test");
+		Response rs = null;
+		
+		startTest(test, usr);
+		
+		rs = loginAPI(test, usr, pass, LOGIN_API_INCORRECT_COMPLETED, rs);
+
+		try {
+			validateLoginAPI(test, usr, pass, WRONG_PASS_API, LOGIN_API_INCORRECT_TEST_OK, VALIDATE_LOGIN_API_INCORRECT, rs);
+
+		} catch (AssertionError e) {
+			handleAssertionError(test, usr, e);
+			
+		} finally {
+			finishTest();
+			
+		}
+
+	}
+	
+	// Test Post-Config
+	@AfterMethod
+	public void finishTest() {
+		report.flush();
+		
+	}
+
+}

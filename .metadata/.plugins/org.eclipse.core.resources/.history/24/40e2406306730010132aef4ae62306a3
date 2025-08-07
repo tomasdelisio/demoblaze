@@ -1,0 +1,16 @@
+package api;
+
+import io.restassured.RestAssured;
+
+public class AuthClient {
+	private static final String URL = "";
+	private String body = "{\"username\":\"%s\",\"password\":\"%s\"}";
+	
+	public Response login(String username, String password) {
+		RestAssured.baseURI = URL;
+		
+		String payload = String.format(body, username, password);
+		
+		
+	}
+}

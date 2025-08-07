@@ -1,0 +1,36 @@
+package api;
+
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
+import static io.restassured.RestAssured.given;
+
+public class AuthClient {
+	private static final String URL = "";
+	private String body = "{\"username\":\"%s\",\"password\":\"%s\"}";
+	private static final String endpoint_login = "/login";
+	
+	public Response login(String username, String password) {
+		RestAssured.baseURI = URL;
+		
+		String payload = String.format(body, username, password);
+		
+		return given()
+				.contentType("application/json")
+				.body(payload)
+		.when()
+				.post(endpoint_login);
+	}
+	
+	public String getAuthToken(String username, String password) {
+		String response = login(username, password).then()
+				.statusCode(200)
+				.extract()
+				.asString();
+		
+		if (!response.contains("Auth_Token")) {
+			throw new RunTimeException("Token no encontrado en la respuesta");
+		}
+		
+		return response.split(" ")[1];
+	}
+}

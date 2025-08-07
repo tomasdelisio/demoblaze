@@ -21,7 +21,7 @@ public class Driver {
 
 		logger.info("Searching Driver");
 		// WINDOWS
-		System.setProperty("webdriver.chrome.driver", "src/test/resources/driver/chromedriver/135/chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver", "src/test/resources/driver/chromedriver/138/chromedriver.exe");
 		
 		// LINUX
 		// System.setProperty("webdriver.chrome.driver", "");
