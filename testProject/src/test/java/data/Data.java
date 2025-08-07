@@ -79,6 +79,33 @@ public class Data {
 		return dt;
 		
 	}
+	
+	@DataProvider(name = "LoginAPI")
+	public Object[][] getDataLoginAPI() {
+		String path = "\\loginAPI\\login.xlsx";
+		Object dt[][] = data(base_path + path, "Data");
+
+		return dt;
+		
+	}
+	
+	@DataProvider(name = "LoginUsernameIncorrectAPI")
+	public Object[][] getDataLoginUsrIncorrectAPI() {
+		String path = "\\login\\loginUsernameIncorrect.xlsx";
+		Object dt[][] = data(base_path + path, "Data");
+
+		return dt;
+		
+	}
+	
+	@DataProvider(name = "LoginPasswordIncorrectAPI")
+	public Object[][] getDataLoginPassIncorrectAPI() {
+		String path = "\\login\\loginPasswordIncorrect.xlsx";
+		Object dt[][] = data(base_path + path, "Data");
+
+		return dt;
+		
+	}
 
 	// Register Cases
 	@DataProvider(name = "Register")

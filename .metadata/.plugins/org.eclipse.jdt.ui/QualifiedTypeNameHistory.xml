@@ -2,5 +2,11 @@
 <qualifiedTypeNameHistroy>
     <fullyQualifiedTypeName name="utils.ErrorMessagesLogin"/>
     <fullyQualifiedTypeName name="test_login.Login"/>
+    <fullyQualifiedTypeName name="io.restassured.RestAssured"/>
+    <fullyQualifiedTypeName name="api.AuthClient"/>
+    <fullyQualifiedTypeName name="io.restassured.response.Response"/>
+    <fullyQualifiedTypeName name="java.lang.System"/>
+    <fullyQualifiedTypeName name="com.aventstack.extentreports.Status"/>
     <fullyQualifiedTypeName name="utils.MessagesLogin"/>
+    <fullyQualifiedTypeName name="utils.MessagesLoginAPI"/>
 </qualifiedTypeNameHistroy>

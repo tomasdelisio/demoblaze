@@ -3,17 +3,13 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="test_login.Login">
+      <class name="test_login_api.LoginAPI">
         <methods>
-          <include name="loginUsrAndPassNull"/>
-          <include name="loginUsrIncorrect"/>
-          <include name="loginUsrOrPassNull"/>
           <include name="configurateTest"/>
-          <include name="loginOK"/>
-          <include name="loginPassIncorrect"/>
+          <include name="loginPassIncorrectAPI"/>
           <include name="finishTest"/>
         </methods>
-      </class> <!-- test_login.Login -->
+      </class> <!-- test_login_api.LoginAPI -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

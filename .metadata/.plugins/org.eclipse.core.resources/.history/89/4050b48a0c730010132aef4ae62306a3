@@ -1,0 +1,38 @@
+package api;
+
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
+import static io.restassured.RestAssured.given;
+
+public class AuthClient {
+	/*** VARIABLES ***/
+	private static final String URL = "https://demoblaze.com/";
+	private static String body = "{\"username\":\"%s\",\"password\":\"%s\"}";
+	private static final String endpoint_login = "/login";
+	
+	/*** METHODS ***/
+	public static Response login(String username, String password) {
+		RestAssured.baseURI = URL;
+		
+		String payload = String.format(body, username, password);
+		
+		return given()
+				.contentType("application/json")
+				.body(payload)
+		.when()
+				.post(endpoint_login);
+	}
+	
+	public String getAuthToken(String username, String password) {
+		String response = login(username, password).then()
+				.statusCode(200)
+				.extract()
+				.asString();
+		
+		if (!response.contains("Auth_Token")) {
+			throw new RuntimeException("Token no encontrado en la respuesta");
+		}
+		
+		return response.split(" ")[1];
+	}
+}
