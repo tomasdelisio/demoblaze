@@ -31,6 +31,7 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Ejecutar tests con testng.xml
+        working-directory: ./testProject
         run: mvn clean test -DsuiteXmlFile=testng.xml
         
       - name: Upload test report
