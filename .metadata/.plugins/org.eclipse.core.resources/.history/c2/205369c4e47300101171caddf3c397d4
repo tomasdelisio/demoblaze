@@ -21,7 +21,7 @@ public class Driver {
 
 		logger.info("Searching Driver");
 		// WINDOWS
-	//	System.setProperty("webdriver.chrome.driver", "src/test/resources/driver/chromedriver/138/chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver", "src/test/resources/driver/chromedriver/138/chromedriver.exe");
 		
 		// LINUX
 		// System.setProperty("webdriver.chrome.driver", "");
@@ -38,9 +38,6 @@ public class Driver {
 
 		options.addArguments("--remote-allow-origins=*");
 		options.addArguments("--start-maximized");
-		options.addArguments("--headless");
-		options.addArguments("--no-sandbox");
-		options.addArguments("--disable-dev-shm-usage");
 
 		logger.info("ChromeOptions Configuration Terminated");
 
