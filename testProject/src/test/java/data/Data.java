@@ -1,150 +1,104 @@
 package data;
 
 import org.testng.annotations.DataProvider;
-
 import utils.ExcelUtils;
+import java.io.File;
 
 public class Data {
-	/*** VARIABLES ***/
-	private static final String base_path = "C:\\Users\\tomas\\Desktop\\Automation\\TestProject\\testProject\\src\\test\\resources\\data";
+    /*** VARIABLES ***/
+    private static final String base_path = System.getProperty("user.dir") 
+        + File.separator + "src" 
+        + File.separator + "test" 
+        + File.separator + "resources" 
+        + File.separator + "data";
 
-	/*** METHODS ***/
-	// Read Excel
-	public Object[][] data(String path, String sheet) {
-		new ExcelUtils(path, sheet);
+    /*** METHODS ***/
+    // Read Excel
+    public Object[][] data(String path, String sheet) {
+        new ExcelUtils(path, sheet);
 
-		int row_count = ExcelUtils.getRowCount();
-		int col_count = ExcelUtils.getColCount();
+        int row_count = ExcelUtils.getRowCount();
+        int col_count = ExcelUtils.getColCount();
 
-		Object dt[][] = new Object[row_count - 1][col_count];
+        Object[][] dt = new Object[row_count - 1][col_count];
 
-		for (int i = 1; i < row_count; i++) {
-			for (int j = 0; j < col_count; j++) {
-				String cell_data = ExcelUtils.getCellData(i, j);
+        for (int i = 1; i < row_count; i++) {
+            for (int j = 0; j < col_count; j++) {
+                String cell_data = ExcelUtils.getCellData(i, j);
+                dt[i - 1][j] = cell_data;
+            }
+        }
 
-				dt[i - 1][j] = cell_data;
-			}
-		}
+        return dt;
+    }
 
-		return dt;
-		
-	}
+    // Login Cases
+    @DataProvider(name = "Login")
+    public Object[][] getDataLogin() {
+        return data(base_path + File.separator + "login" + File.separator + "login.xlsx", "Data");
+    }
 
-	// Login Cases
-	@DataProvider(name = "Login")
-	public Object[][] getDataLogin() {
-		String path = "\\login\\login.xlsx";
-		Object dt[][] = data(base_path + path, "Data");
+    @DataProvider(name = "LoginUsernameIncorrect")
+    public Object[][] getDataLoginUsrIncorrect() {
+        return data(base_path + File.separator + "login" + File.separator + "loginUsernameIncorrect.xlsx", "Data");
+    }
 
-		return dt;
-		
-	}
+    @DataProvider(name = "LoginPasswordIncorrect")
+    public Object[][] getDataLoginPassIncorrect() {
+        return data(base_path + File.separator + "login" + File.separator + "loginPasswordIncorrect.xlsx", "Data");
+    }
 
-	@DataProvider(name = "LoginUsernameIncorrect")
-	public Object[][] getDataLoginUsrIncorrect() {
-		String path = "\\login\\loginUsernameIncorrect.xlsx";
-		Object dt[][] = data(base_path + path, "Data");
+    @DataProvider(name = "LoginUsernameOrPasswordNull")
+    public Object[][] getDataLoginUsrOrPassNull() {
+        return data(base_path + File.separator + "login" + File.separator + "loginUsernameOrPasswordNull.xlsx", "Data");
+    }
 
-		return dt;
-		
-	}
-	
-	@DataProvider(name = "LoginPasswordIncorrect")
-	public Object[][] getDataLoginPassIncorrect() {
-		String path = "\\login\\loginPasswordIncorrect.xlsx";
-		Object dt[][] = data(base_path + path, "Data");
+    @DataProvider(name = "LoginUsernameAndPasswordNull")
+    public Object[][] getDataLoginUsrAndPassNull() {
+        Object[][] dt = data(base_path + File.separator + "login" + File.separator + "loginUsernameAndPasswordNull.xlsx", "Data");
+        if (dt == null || dt.length == 0) {
+            dt = new Object[][]{{"", ""}};
+        }
+        return dt;
+    }
 
-		return dt;
-		
-	}
-	
-	@DataProvider(name = "LoginUsernameOrPasswordNull")
-	public Object[][] getDataLoginUsrOrPassNull() {
-		String path = "\\login\\loginUsernameOrPasswordNull.xlsx";
-		Object dt[][] = data(base_path + path, "Data");
+    @DataProvider(name = "LoginAPI")
+    public Object[][] getDataLoginAPI() {
+        return data(base_path + File.separator + "loginAPI" + File.separator + "login.xlsx", "Data");
+    }
 
-		return dt;
-		
-	}
-	
-	@DataProvider(name = "LoginUsernameAndPasswordNull")
-	public Object[][] getDataLoginUsrAndPassNull() {
-		String path = "\\login\\loginUsernameAndPasswordNull.xlsx";
-		Object dt[][] = data(base_path + path, "Data");
-		
-		if (dt == null || dt.length == 0) {
-			dt = new Object[][] {{"", ""}};
-		}
+    @DataProvider(name = "LoginUsernameIncorrectAPI")
+    public Object[][] getDataLoginUsrIncorrectAPI() {
+        return data(base_path + File.separator + "login" + File.separator + "loginUsernameIncorrect.xlsx", "Data");
+    }
 
-		return dt;
-		
-	}
-	
-	@DataProvider(name = "LoginAPI")
-	public Object[][] getDataLoginAPI() {
-		String path = "\\loginAPI\\login.xlsx";
-		Object dt[][] = data(base_path + path, "Data");
+    @DataProvider(name = "LoginPasswordIncorrectAPI")
+    public Object[][] getDataLoginPassIncorrectAPI() {
+        return data(base_path + File.separator + "login" + File.separator + "loginPasswordIncorrect.xlsx", "Data");
+    }
 
-		return dt;
-		
-	}
-	
-	@DataProvider(name = "LoginUsernameIncorrectAPI")
-	public Object[][] getDataLoginUsrIncorrectAPI() {
-		String path = "\\login\\loginUsernameIncorrect.xlsx";
-		Object dt[][] = data(base_path + path, "Data");
+    // Register Cases
+    @DataProvider(name = "Register")
+    public Object[][] getDataRegister() {
+        return data(base_path + File.separator + "register" + File.separator + "register.xlsx", "Data");
+    }
 
-		return dt;
-		
-	}
-	
-	@DataProvider(name = "LoginPasswordIncorrectAPI")
-	public Object[][] getDataLoginPassIncorrectAPI() {
-		String path = "\\login\\loginPasswordIncorrect.xlsx";
-		Object dt[][] = data(base_path + path, "Data");
+    @DataProvider(name = "RegisterUsernameExistent")
+    public Object[][] getDataRegisterUsrExistent() {
+        return data(base_path + File.separator + "register" + File.separator + "registerUsernameExistent.xlsx", "Data");
+    }
 
-		return dt;
-		
-	}
+    @DataProvider(name = "RegisterUsernameOrPasswordNull")
+    public Object[][] getDataRegisterUsrOrPassNull() {
+        return data(base_path + File.separator + "register" + File.separator + "registerUsernameOrPasswordNull.xlsx", "Data");
+    }
 
-	// Register Cases
-	@DataProvider(name = "Register")
-	public Object[][] getDataRegister() {
-		String path = "\\register\\register.xlsx";
-		Object dt[][] = data(base_path + path, "Data");
-
-		return dt;
-		
-	}
-
-	@DataProvider(name = "RegisterUsernameExistent")
-	public Object[][] getDataRegisterUsrExistent() {
-		String path = "\\register\\registerUsernameExistent.xlsx";
-		Object dt[][] = data(base_path + path, "Data");
-
-		return dt;
-		
-	}
-	
-	@DataProvider(name = "RegisterUsernameOrPasswordNull")
-	public Object[][] getDataRegisterUsrOrPassNull() {
-		String path = "\\register\\registerUsernameOrPasswordNull.xlsx";
-		Object dt[][] = data(base_path + path, "Data");
-
-		return dt;
-		
-	}
-	
-	@DataProvider(name = "RegisterUsernameAndPasswordNull")
-	public Object[][] getDataRegisterUsrAndPassNull() {
-		String path = "\\register\\registerUsernameAndPasswordNull.xlsx";
-		Object dt[][] = data(base_path + path, "Data");
-		
-		if (dt == null || dt.length == 0) {
-			dt = new Object[][] {{"", ""}};
-		}
-
-		return dt;
-
-	}
+    @DataProvider(name = "RegisterUsernameAndPasswordNull")
+    public Object[][] getDataRegisterUsrAndPassNull() {
+        Object[][] dt = data(base_path + File.separator + "register" + File.separator + "registerUsernameAndPasswordNull.xlsx", "Data");
+        if (dt == null || dt.length == 0) {
+            dt = new Object[][]{{"", ""}};
+        }
+        return dt;
+    }
 }
