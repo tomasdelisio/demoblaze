@@ -1,6 +1,8 @@
 name: Run Tests
 
 on:
+  repository_dispatch:
+    types: [run-selenium-dev]
   push:
     branches: [ main ]
   pull_request:
