@@ -57,38 +57,34 @@
 			<artifactId>poi-ooxml</artifactId>
 			<version>5.2.3</version>
 		</dependency>
-
+		
 		<!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
 		<dependency>
-			<groupId>io.rest-assured</groupId>
-			<artifactId>rest-assured</artifactId>
-			<version>5.5.5</version>
-			<scope>test</scope>
+    		<groupId>io.rest-assured</groupId>
+    		<artifactId>rest-assured</artifactId>
+    		<version>5.5.5</version>
+    		<scope>test</scope>
 		</dependency>
 	</dependencies>
-
+	
 	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>3.2.5</version>
-				<configuration>
-					<suiteXmlFiles>
-						<suiteXmlFile>testng.xml</suiteXmlFile>
-					</suiteXmlFiles>
-					<forkCount>0</forkCount> <!-- desactiva forks para evitar
-					inconsistencias -->
-					<reuseForks>false</reuseForks>
-					<testFailureIgnore>false</testFailureIgnore> <!-- que falle
-					el build si tests fallan -->
-					<printSummary>true</printSummary> <!-- resumen claro al final -->
-					<redirectTestOutputToFile>false</redirectTestOutputToFile> <!--
-					para que se vean logs en consola -->
-					<trimStackTrace>false</trimStackTrace> <!-- stacktraces
-					completos -->
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+  <plugins>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-surefire-plugin</artifactId>
+      <version>3.2.5</version>
+      <configuration>
+        <suiteXmlFiles>
+          <suiteXmlFile>testng.xml</suiteXmlFile>
+        </suiteXmlFiles>
+        <forkCount>0</forkCount> <!-- desactiva forks para evitar inconsistencias -->
+        <reuseForks>false</reuseForks>
+        <testFailureIgnore>false</testFailureIgnore> <!-- que falle el build si tests fallan -->
+        <printSummary>true</printSummary> <!-- resumen claro al final -->
+        <redirectTestOutputToFile>false</redirectTestOutputToFile> <!-- para que se vean logs en consola -->
+        <trimStackTrace>false</trimStackTrace> <!-- stacktraces completos -->
+      </configuration>
+    </plugin>
+  </plugins>
+</build>
 </project>
