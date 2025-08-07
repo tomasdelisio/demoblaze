@@ -38,9 +38,6 @@ public class Driver {
 
 		options.addArguments("--remote-allow-origins=*");
 		options.addArguments("--start-maximized");
-		options.addArguments("--headless");
-		options.addArguments("--no-sandbox");
-		options.addArguments("--disable-dev-shm-usage");
 
 		logger.info("ChromeOptions Configuration Terminated");
 

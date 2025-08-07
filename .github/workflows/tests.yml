@@ -20,7 +20,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '17' # Cambiá si usás Java 8 u 11
+          java-version: '17' # Cambia si usás Java 8 u 11
 
       - name: Cache de dependencias
         uses: actions/cache@v4
@@ -30,6 +30,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
+      - name: Instalar Chrome y ChromeDriver
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y chromium-browser chromium-chromedriver
+          which chromedriver
+          chromedriver --version
+
       - name: Ejecutar tests con testng.xml
         working-directory: ./testProject
         run: mvn clean test -DsuiteXmlFile=testng.xml
@@ -37,5 +44,5 @@ jobs:
       - name: Upload test report
         uses: actions/upload-artifact@v4
         with:
-            name: reporte-pruebas
-            path: testProject/test-output/
+          name: reporte-pruebas
+          path: testProject/test-output/
