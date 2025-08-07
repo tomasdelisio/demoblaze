@@ -36,6 +36,10 @@ jobs:
           sudo apt-get install -y chromium-browser chromium-chromedriver
           which chromedriver
           chromedriver --version
+          
+      - name: Listar clases compiladas
+        working-directory: ./testProject/target/test-classes
+        run: ls -R
 
       - name: Ejecutar tests con testng.xml
         working-directory: ./testProject
