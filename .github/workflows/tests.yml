@@ -32,3 +32,4 @@ jobs:
 
       - name: Ejecutar tests
         run: mvn clean test
+        working-directory: ./testProject
