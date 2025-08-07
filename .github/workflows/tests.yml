@@ -36,14 +36,18 @@ jobs:
           sudo apt-get install -y chromium-browser chromium-chromedriver
           which chromedriver
           chromedriver --version
-          
+     
+      - name: Compilar tests
+        working-directory: ./testProject
+        run: mvn test-compile 
+        
       - name: Listar clases compiladas
         working-directory: ./testProject/target/test-classes
         run: ls -R
 
       - name: Ejecutar tests con testng.xml
         working-directory: ./testProject
-        run: mvn clean test -DsuiteXmlFile=testng.xml
+        run: mvn test -DsuiteXmlFile=testng.xml
         
       - name: Upload test report
         uses: actions/upload-artifact@v4
