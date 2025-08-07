@@ -30,8 +30,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      - name: Ejecutar tests
-        run: mvn clean test
+      - name: Ejecutar tests con testng.xml
+        run: mvn clean test -Dsurefire.suiteXmlFiles=testng.xml
         working-directory: ./testProject
         
       - name: Upload test report
