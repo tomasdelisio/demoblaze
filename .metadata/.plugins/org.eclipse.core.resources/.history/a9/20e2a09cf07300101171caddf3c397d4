@@ -1,0 +1,79 @@
+package driver;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.UUID;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+
+public class Driver {
+	/*** VARIABLES ***/
+	// Logger
+	private static Logger logger = LogManager.getLogger(Driver.class);
+	
+	// Headless
+	private static boolean headless = false;
+
+	/*** METHODS ***/
+	// Driver Configuration
+	public static WebDriver configurate() {
+		logger.info("Driver Configuration Started");
+
+		String os = System.getProperty("os.name").toLowerCase();
+		if (os.contains("linux")) {
+		    System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
+		    
+		} else if (os.contains("win")) {
+		    System.setProperty("webdriver.chrome.driver", "src/test/resources/driver/chromedriver/138/chromedriver.exe");
+		    
+		}
+
+		logger.info("ChromeOptions Configuration Started");
+		ChromeOptions options = new ChromeOptions();
+
+		options.addArguments("--remote-allow-origins=*");
+		options.addArguments("--start-maximized");
+		options.addArguments("--no-sandbox");
+		options.addArguments("--disable-dev-shm-usage");
+		
+		if (headless) {
+		    options.addArguments("--headless");
+		}
+		
+		try {
+            if (!headless) {
+                Path tempProfileDir = Files.createTempDirectory("chrome-profile-" + UUID.randomUUID());
+             //   options.addArguments("--user-data-dir=" + tempProfileDir.toAbsolutePath().toString());
+                logger.info("Using user-data-dir: " + tempProfileDir.toAbsolutePath().toString());
+            } else {
+                logger.info("Headless mode - no user-data-dir used");
+            }
+        } catch (Exception e) {
+            logger.error("Error creating temp user-data-dir", e);
+        }
+
+		logger.info("ChromeOptions Configuration Terminated");
+
+		WebDriver driver = new ChromeDriver(options);
+
+		logger.info("Driver Configuration Terminated");
+
+		return driver;
+	}
+
+	// Close Connection
+	public static void finish(WebDriver driver) {
+		if (driver != null) {
+			logger.info("Driver quit");
+			driver.quit();
+			
+		} else {
+			logger.warn("Driver is null, nothing to quit");
+			
+		}
+	}
+}
