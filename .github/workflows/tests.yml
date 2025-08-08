@@ -45,9 +45,9 @@ jobs:
         working-directory: ./testProject/target/test-classes
         run: ls -R
 
-      - name: Ejecutar tests con testng.xml
+      - name: Ejecutar tests con Maven
         working-directory: ./testProject
-        run: mvn test -Dsurefire.suiteXmlFiles=testng.xml
+        run: mvn test
         
       - name: Upload test report
         uses: actions/upload-artifact@v4

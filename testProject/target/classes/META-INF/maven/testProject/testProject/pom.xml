@@ -77,16 +77,12 @@
 					<suiteXmlFiles>
 						<suiteXmlFile>testng.xml</suiteXmlFile>
 					</suiteXmlFiles>
-					<forkCount>0</forkCount> <!-- desactiva forks para evitar
-					inconsistencias -->
+					<forkCount>1</forkCount> 
 					<reuseForks>false</reuseForks>
-					<testFailureIgnore>false</testFailureIgnore> <!-- que falle
-					el build si tests fallan -->
-					<printSummary>true</printSummary> <!-- resumen claro al final -->
-					<redirectTestOutputToFile>false</redirectTestOutputToFile> <!--
-					para que se vean logs en consola -->
-					<trimStackTrace>false</trimStackTrace> <!-- stacktraces
-					completos -->
+					<testFailureIgnore>false</testFailureIgnore> 
+					<printSummary>true</printSummary> 
+					<redirectTestOutputToFile>false</redirectTestOutputToFile>
+					<trimStackTrace>false</trimStackTrace>
 				</configuration>
 			</plugin>
 		</plugins>
