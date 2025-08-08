@@ -36,25 +36,25 @@ jobs:
           sudo apt-get install -y chromium-browser chromium-chromedriver
           which chromedriver
           chromedriver --version
-     
+
       - name: Compilar tests
         working-directory: ./testProject
         run: mvn test-compile 
-        
+
       - name: Listar clases compiladas
         working-directory: ./testProject/target/test-classes
         run: ls -R
-        
-        - name: Limpiar carpeta test-output
-          working-directory: ./testProject
-          run: |
-            rm -rf test-output
-            echo "test-output limpiado"
+
+      - name: Limpiar carpeta test-output
+        working-directory: ./testProject
+        run: |
+          rm -rf test-output
+          echo "test-output limpiado"
 
       - name: Ejecutar tests con Maven
         working-directory: ./testProject
         run: mvn test
-        
+
       - name: Upload test report
         uses: actions/upload-artifact@v4
         with:
