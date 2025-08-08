@@ -34,39 +34,13 @@ public class Register {
 
 	// URL
 	private static final String URL = "https://www.demoblaze.com/index.html";
-	
-	// Messages Register
-	private final String REGISTER_TEST_START = MessagesRegister.REGISTER_TEST_START.getMessage();
-	private final String REGISTER = MessagesRegister.REGISTER.getMessage(); 
-	private final String REGISTER_COMPLETED = MessagesRegister.REGISTER_COMPLETED.getMessage();
-	private final String VALIDATE_REGISTER = MessagesRegister.VALIDATE_REGISTER.getMessage();
-	private final String REGISTER_OK = MessagesRegister.REGISTER_OK.getMessage();
-	private final String REGISTER_TEST_OK = MessagesRegister.REGISTER_TEST_OK.getMessage();
-	private final String REGISTER_TEST_ERROR = MessagesRegister.REGISTER_TEST_ERROR.getMessage();
-	private final String REGISTER_TEST_FINISH = MessagesRegister.REGISTER_TEST_FINISH.getMessage();
-	
-	// Messages Login
-	private final String LOGIN_BTN_CLICKABLE = MessagesLogin.LOGIN_BTN_CLICKABLE.getMessage();
-	private final String LOGIN_BTN_NOT_CLICKABLE = MessagesLogin.LOGIN_BTN_NOT_CLICKABLE.getMessage();
-	
-	// Messages
-	private final String USR_MATCH = Messages.USR_MATCH.getMessage();
-	private final String PASS_MATCH = Messages.PASS_MATCH.getMessage();
-	private final String ALERT_TXT_MATCH = Messages.ALERT_TXT_MATCH.getMessage();
-	private final String USR_MISMATCH = Messages.USR_MISMATCH.getMessage();
-	private final String PASS_MISMATCH = Messages.PASS_MISMATCH.getMessage();
-	private final String ALERT_TXT_MISMATCH = Messages.ALERT_TXT_MISMATCH.getMessage();
-	private final String USR_EXIST = Messages.USR_EXIST.getMessage();
-	private final String USR_PASS_NULL = Messages.USR_PASS_NULL.getMessage();
-		
-	// Messages Assertion
-	private final String HANDLE_ASSERTION_ERROR = Messages.HANDLE_ASSERTION_ERROR.getMessage();
 		
 	// Data
 	private String usr_actual = null;
 	private String pass_actual = null;
 	private Boolean is_login_btn_actual_clickable = null;
 	private String alert_txt_actual = null;
+	private String error_msg = null;
 
 	// Reports
 	private ExtentReports report = null;
@@ -89,19 +63,19 @@ public class Register {
 	
 	// Testing Methods
 	private void startTest(ExtentTest test, String usr) {
-		test.log(Status.INFO, REGISTER_TEST_START + "\nUsuario: " + usr);
-		System.out.println(REGISTER_TEST_START + "\nUsuario: " + usr + "\n");
+		test.log(Status.INFO, MessagesRegister.REGISTER_TEST_START.getMessage() + "\nUsuario: " + usr);
+		System.out.println(MessagesRegister.REGISTER_TEST_START.getMessage() + "\nUsuario: " + usr + "\n");
 			
 	}
 		
 	private void finishTest(ExtentTest test, String usr) {
-		test.log(Status.INFO, REGISTER_TEST_FINISH + "\nUsuario: " + usr);
-		System.out.println(REGISTER_TEST_FINISH + "\nUsuario: " + usr + "\n");
+		test.log(Status.INFO, MessagesRegister.REGISTER_TEST_FINISH.getMessage() + "\nUsuario: " + usr);
+		System.out.println(MessagesRegister.REGISTER_TEST_FINISH.getMessage() + "\nUsuario: " + usr + "\n");
 			
 	}
 	
 	private void register(ExtentTest test, String usr, String pass) {
-		test.log(Status.INFO, REGISTER);
+		test.log(Status.INFO, MessagesRegister.REGISTER.getMessage());
 		
 		register_page.clickRegisterBtn();
 		
@@ -118,38 +92,40 @@ public class Register {
 		
 		is_login_btn_actual_clickable = login_page.isLoginBtnClickable();
 		
-		test.log(Status.INFO, REGISTER_COMPLETED);
+		test.log(Status.INFO, MessagesRegister.REGISTER_COMPLETED.getMessage());
 		
 	}
 		
 	private void validateRegister(ExtentTest test, String usr, String pass, String msg) {
-		test.log(Status.INFO, VALIDATE_REGISTER);
+		test.log(Status.INFO, MessagesRegister.VALIDATE_REGISTER.getMessage());
 		
-		assertEquals(usr_actual, usr, USR_MISMATCH);
-		test.pass(USR_MATCH);
+		assertEquals(usr_actual, usr, Messages.USR_MISMATCH.getMessage());
+		test.pass(Messages.USR_MATCH.getMessage());
 		
-		assertEquals(pass_actual, pass, PASS_MISMATCH);
-		test.pass(PASS_MATCH);
+		assertEquals(pass_actual, pass, Messages.PASS_MISMATCH.getMessage());
+		test.pass(Messages.PASS_MATCH.getMessage());
 		
-		assertEquals(alert_txt_actual, msg, ALERT_TXT_MISMATCH);
-		test.pass(ALERT_TXT_MATCH);
+		assertEquals(alert_txt_actual, msg, Messages.ALERT_TXT_MISMATCH.getMessage());
+		test.pass(Messages.ALERT_TXT_MATCH.getMessage());
 		
-		assertTrue(is_login_btn_actual_clickable, LOGIN_BTN_NOT_CLICKABLE);
-		test.pass(LOGIN_BTN_CLICKABLE);
+		assertTrue(is_login_btn_actual_clickable, MessagesLogin.LOGIN_BTN_NOT_CLICKABLE.getMessage());
+		test.pass(MessagesLogin.LOGIN_BTN_CLICKABLE.getMessage());
 				
-		test.pass(REGISTER_TEST_OK);
-		System.out.println(REGISTER_TEST_OK + "\nUsuario: " + usr + "\n");
+		test.pass(MessagesRegister.REGISTER_TEST_OK.getMessage());
+		System.out.println(MessagesRegister.REGISTER_TEST_OK.getMessage() + "\nUsuario: " + usr + "\n");
 		
 	}
 	
-	private void handleAssertionError(ExtentTest test, String usr, AssertionError e) {
-		test.log(Status.INFO, HANDLE_ASSERTION_ERROR);
+	private String handleAssertionError(ExtentTest test, String usr, AssertionError e) {
+		test.log(Status.INFO, Messages.HANDLE_ASSERTION_ERROR.getMessage());
 		
 		test.addScreenCaptureFromPath("screenshot.png");
 		
-		test.fail(REGISTER_TEST_ERROR + "." + "\nUsuario: " + usr + " \nERROR: " + e.getMessage());
-		System.out.println(REGISTER_TEST_ERROR + "\nUsuario: " + usr + " \nERROR: " + e.getMessage() + "\n");
+		String msg = MessagesRegister.REGISTER_TEST_ERROR.getMessage();
+		test.fail(msg + "." + "\nUsuario: " + usr + " \nERROR: " + e.getMessage());
+		System.out.println(msg + "\nUsuario: " + usr + " \nERROR: " + e.getMessage() + "\n");
 		
+		return msg;
 	}
 
 	// Tests
@@ -162,10 +138,14 @@ public class Register {
 		register(test, usr, pass);
 
 		try {
-			validateRegister(test, usr, pass, REGISTER_OK);
+			validateRegister(test, usr, pass, MessagesRegister.REGISTER_OK.getMessage());
 
 		} catch (AssertionError e) {
-			handleAssertionError(test, usr, e);
+			error_msg = handleAssertionError(test, usr, e);
+
+			AssertionError err = new AssertionError(error_msg);
+			err.setStackTrace(new StackTraceElement[0]);
+			throw err;
 			
 		} finally {
 			finishTest(test, usr);
@@ -183,10 +163,14 @@ public class Register {
 		register(test, usr, pass);
 
 		try {
-			validateRegister(test, usr, pass, USR_EXIST);
+			validateRegister(test, usr, pass, Messages.USR_EXIST.getMessage());
 
 		} catch (AssertionError e) {
-			handleAssertionError(test, usr, e);
+			error_msg = handleAssertionError(test, usr, e);
+
+			AssertionError err = new AssertionError(error_msg);
+			err.setStackTrace(new StackTraceElement[0]);
+			throw err;
 			
 		} finally {
 			finishTest(test, usr);
@@ -204,10 +188,14 @@ public class Register {
 		register(test, usr, pass);
 
 		try {
-			validateRegister(test, usr, pass, USR_PASS_NULL);
+			validateRegister(test, usr, pass, Messages.USR_PASS_NULL.getMessage());
 
 		} catch (AssertionError e) {
-			handleAssertionError(test, usr, e);
+			error_msg = handleAssertionError(test, usr, e);
+
+			AssertionError err = new AssertionError(error_msg);
+			err.setStackTrace(new StackTraceElement[0]);
+			throw err;
 			
 		} finally {
 			finishTest(test, usr);
@@ -224,10 +212,14 @@ public class Register {
 		register(test, usr, pass);
 
 		try {
-			validateRegister(test, usr, pass, USR_PASS_NULL);
+			validateRegister(test, usr, pass, Messages.USR_PASS_NULL.getMessage());
 
 		} catch (AssertionError e) {
-			handleAssertionError(test, usr, e);
+			error_msg = handleAssertionError(test, usr, e);
+
+			AssertionError err = new AssertionError(error_msg);
+			err.setStackTrace(new StackTraceElement[0]);
+			throw err;
 			
 		} finally {
 			finishTest(test, usr);

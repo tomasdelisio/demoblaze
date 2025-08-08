@@ -1,0 +1,55 @@
+package driver;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.UUID;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+
+public class Driver {
+	/*** VARIABLES ***/
+	// Logger
+	private static Logger logger = LogManager.getLogger(Driver.class);
+	
+	// Headless
+	private static boolean headless = false;
+
+	/*** METHODS ***/
+	// Driver Configuration
+	public static WebDriver configurate() {
+	    Logger logger = LogManager.getLogger(Driver.class);
+
+	    String os = System.getProperty("os.name").toLowerCase();
+	    if (os.contains("linux")) {
+	        System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver"); // GitHub Actions path
+	    } else if (os.contains("win")) {
+	        System.setProperty("webdriver.chrome.driver", "src/test/resources/driver/chromedriver/138/chromedriver.exe");
+	    }
+
+	    ChromeOptions options = new ChromeOptions();
+	    
+	    options.addArguments("--headless=new");
+	    options.addArguments("--disable-gpu");
+	    options.addArguments("--no-sandbox");
+	    options.addArguments("--disable-dev-shm-usage");
+
+	    WebDriver driver = new ChromeDriver(options);
+	    return driver;
+	}
+
+	// Close Connection
+	public static void finish(WebDriver driver) {
+		if (driver != null) {
+			logger.info("Driver quit");
+			driver.quit();
+			
+		} else {
+			logger.warn("Driver is null, nothing to quit");
+			
+		}
+	}
+}

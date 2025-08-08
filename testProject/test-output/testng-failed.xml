@@ -3,14 +3,16 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="test_login.Login">
+      <class name="test_register.Register">
         <methods>
           <include name="finishTests"/>
-          <include name="loginUsrOrPassNull" invocation-numbers="1"/>
+          <include name="registerUsrOrPassNull" invocation-numbers="0 1"/>
+          <include name="registerUsrAndPassNull" invocation-numbers="0"/>
+          <include name="registerUsrExistent" invocation-numbers="0"/>
+          <include name="registerOK" invocation-numbers="0"/>
           <include name="configurateTest"/>
-          <include name="loginOK" invocation-numbers="1"/>
         </methods>
-      </class> <!-- test_login.Login -->
+      </class> <!-- test_register.Register -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
