@@ -38,6 +38,7 @@ public class Login {
 	private Boolean is_welcome_txt_actual_visible = null;
 	private String usr_of_welcome_txt_actual = null;
 	private String alert_txt_actual = null;
+	private String error_msg = null;
 
 	// Reports
 	private ExtentReports report = null;
@@ -148,15 +149,18 @@ public class Login {
 		
 	}
 	
-	private void handleAssertionError(ExtentTest test, String usr, AssertionError e) {
+	private String handleAssertionError(ExtentTest test, String usr, AssertionError e) {
 		test.log(Status.INFO, Messages.HANDLE_ASSERTION_ERROR.getMessage());
 		
 		//String screenshotPath = ScreenshotUtils.capture(driver, usr); 
 		//test.addScreenCaptureFromPath(screenshotPath); CODEAR MÉTODO DE CAPTURA DE IMAGENES
 		
 		test.fail(MessagesLogin.LOGIN_TEST_ERROR.getMessage() + "\nUsuario: " + usr + " \nERROR: " + e.getMessage());
-		System.out.println(MessagesLogin.LOGIN_TEST_ERROR.getMessage() + "\nUsuario: " + usr + " \nERROR: " + e.getMessage() + "\n");
 		
+		String msg = MessagesLogin.LOGIN_TEST_ERROR.getMessage();
+		System.out.println(msg + "\nUsuario: " + usr + " \nERROR: " + e.getMessage() + "\n");
+		
+		return msg;
 	}
 
 	// Tests
@@ -172,7 +176,11 @@ public class Login {
 			validateLogin(test, usr, pass);
 			
 		} catch (AssertionError e) {
-			handleAssertionError(test, usr, e);
+			error_msg = handleAssertionError(test, usr, e);
+
+			AssertionError err = new AssertionError(error_msg);
+			err.setStackTrace(new StackTraceElement[0]);
+			throw err;
 			
 		} finally {
 			finishTest(test, usr);
@@ -192,7 +200,11 @@ public class Login {
 			validateLoginIncorrect(test, usr, pass, Messages.USR_DOES_NOT_EXIST.getMessage());
 
 		} catch (AssertionError e) {
-			handleAssertionError(test, usr, e);
+			error_msg = handleAssertionError(test, usr, e);
+
+			AssertionError err = new AssertionError(error_msg);
+			err.setStackTrace(new StackTraceElement[0]);
+			throw err;
 			
 		} finally {
 			finishTest(test, usr);
@@ -213,7 +225,11 @@ public class Login {
 			validateLoginIncorrect(test, usr, pass, Messages.WRONG_PASS.getMessage());
 
 		} catch (AssertionError e) {
-			handleAssertionError(test, usr, e);
+			error_msg = handleAssertionError(test, usr, e);
+
+			AssertionError err = new AssertionError(error_msg);
+			err.setStackTrace(new StackTraceElement[0]);
+			throw err;
 			
 		} finally {
 			finishTest(test, usr);
@@ -255,7 +271,11 @@ public class Login {
 			validateLoginIncorrect(test, usr, pass, Messages.USR_PASS_NULL.getMessage());
 
 		} catch (AssertionError e) {
-			handleAssertionError(test, usr, e);
+			error_msg = handleAssertionError(test, usr, e);
+
+			AssertionError err = new AssertionError(error_msg);
+			err.setStackTrace(new StackTraceElement[0]);
+			throw err;
 			
 		} finally {
 			finishTest(test, usr);

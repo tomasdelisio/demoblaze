@@ -2,6 +2,7 @@ package test_login_api;
 
 import static org.testng.Assert.assertEquals;
 
+import org.junit.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -18,6 +19,9 @@ import utils.Messages;
 import utils.MessagesLoginAPI;
 
 public class LoginAPI {	
+	/*** VARIABLES ***/
+	//Data
+	private String error_msg = null;
 	// Reports
 	private ExtentReports report = null;
 
@@ -68,13 +72,17 @@ public class LoginAPI {
 		
 	}
 	
-	private void handleAssertionError(ExtentTest test, String usr, AssertionError e) {
+	private String handleAssertionError(ExtentTest test, String usr, AssertionError e) {
 		test.log(Status.INFO, Messages.HANDLE_ASSERTION_ERROR.getMessage());
 		
 		test.addScreenCaptureFromPath("screenshot.png");
 		
 		test.fail(MessagesLoginAPI.LOGIN_API_TEST_ERROR.getMessage() + "\nUsuario: " + usr + " \nERROR: " + e.getMessage());
-		System.out.println(MessagesLoginAPI.LOGIN_API_TEST_ERROR.getMessage() + "\nUsuario: " + usr + " \nERROR: " + e.getMessage() + "\n");
+		
+		String msg = MessagesLoginAPI.LOGIN_API_TEST_ERROR.getMessage();
+		System.out.println(msg + "\nUsuario: " + usr + " \nERROR: " + e.getMessage() + "\n");
+		
+		return msg;
 		
 	}
 	
@@ -95,7 +103,12 @@ public class LoginAPI {
 		try {
 			validateLoginAPI(test, usr, pass, Messages.LOGIN_API_OK.getMessage(), MessagesLoginAPI.LOGIN_API_TEST_OK.getMessage(), MessagesLoginAPI.VALIDATE_LOGIN_API.getMessage(), rs);
 		}catch (AssertionError e) {
-			handleAssertionError(test, usr, e);
+			error_msg = handleAssertionError(test, usr, e);
+
+			AssertionError err = new AssertionError(error_msg);
+			err.setStackTrace(new StackTraceElement[0]);
+			throw err;
+			
 		}finally {
 			finishTest(test, usr);
 		}
@@ -113,8 +126,12 @@ public class LoginAPI {
 		try {
 			validateLoginAPI(test, usr, pass, Messages.USR_DOES_NOT_EXIST_API.getMessage(), MessagesLoginAPI.LOGIN_API_INCORRECT_TEST_OK.getMessage(), MessagesLoginAPI.VALIDATE_LOGIN_API_INCORRECT.getMessage(), rs);
 
-		} catch (AssertionError e) {
-			handleAssertionError(test, usr, e);
+		} catch (AssertionError e) {			
+			error_msg = handleAssertionError(test, usr, e);
+
+			AssertionError err = new AssertionError(error_msg);
+			err.setStackTrace(new StackTraceElement[0]);
+			throw err;
 			
 		} finally {
 			finishTest();
@@ -136,7 +153,11 @@ public class LoginAPI {
 			validateLoginAPI(test, usr, pass, Messages.WRONG_PASS_API.getMessage(), MessagesLoginAPI.LOGIN_API_INCORRECT_TEST_OK.getMessage(), MessagesLoginAPI.VALIDATE_LOGIN_API_INCORRECT.getMessage(), rs);
 
 		} catch (AssertionError e) {
-			handleAssertionError(test, usr, e);
+			error_msg = handleAssertionError(test, usr, e);
+
+			AssertionError err = new AssertionError(error_msg);
+			err.setStackTrace(new StackTraceElement[0]);
+			throw err;
 			
 		} finally {
 			finishTest();

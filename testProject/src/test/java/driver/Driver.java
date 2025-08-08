@@ -1,9 +1,5 @@
 package driver;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.UUID;
-
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -32,11 +28,16 @@ public class Driver {
 
 	    ChromeOptions options = new ChromeOptions();
 	    
-	    options.addArguments("--headless=new");
-	    options.addArguments("--disable-gpu");
-	    options.addArguments("--no-sandbox");
-	    options.addArguments("--disable-dev-shm-usage");
-
+	    if (headless) {
+            options.addArguments("--headless=new");
+            options.addArguments("--disable-gpu");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
+            logger.info("Running Chrome in headless mode");
+        } else {
+            logger.info("Running Chrome with GUI");
+        }
+	    
 	    WebDriver driver = new ChromeDriver(options);
 	    return driver;
 	}
