@@ -78,11 +78,6 @@ public class LoginAPI {
 		
 	}
 	
-	@Test(priority = 0)
-	public void simpleTest() {
-	    System.out.println("LoginAPI.simpleTest is running!");
-	}
-	
 	@Test(dataProvider = "LoginAPI", dataProviderClass = Data.class, priority = 1)
 	public void loginAPIOK(String usr, String pass) {
 		ExtentTest test = report.createTest("Login API Test");
