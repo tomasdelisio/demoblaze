@@ -2,7 +2,6 @@ package driver;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.UUID;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -55,6 +54,8 @@ public class Driver {
         } catch (Exception e) {
             logger.error("Error creating temp user-data-dir", e);
         }
+
+
 
 		logger.info("ChromeOptions Configuration Terminated");
 
