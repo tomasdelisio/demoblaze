@@ -253,11 +253,6 @@ public class Login {
 			validateLoginIncorrect(test, usr, pass, Messages.USR_PASS_NULL.getMessage());
 
 		} catch (AssertionError e) {
-			/*	error_msg = handleAssertionError(test, usr, e);
-
-			AssertionError err = new AssertionError(error_msg);
-			err.setStackTrace(new StackTraceElement[0]);
-			throw err; */
 			handleAssertionError(test, usr, e);
 			
 		} finally {
@@ -279,12 +274,11 @@ public class Login {
 			validateLoginIncorrect(test, usr, pass, Messages.USR_PASS_NULL.getMessage());
 
 		} catch (AssertionError e) {
-			/*	error_msg = handleAssertionError(test, usr, e);
+			error_msg = handleAssertionError(test, usr, e);
 
 			AssertionError err = new AssertionError(error_msg);
 			err.setStackTrace(new StackTraceElement[0]);
-			throw err; */
-			handleAssertionError(test, usr, e);
+			throw err;
 			
 		} finally {
 			finishTest(test, usr);
