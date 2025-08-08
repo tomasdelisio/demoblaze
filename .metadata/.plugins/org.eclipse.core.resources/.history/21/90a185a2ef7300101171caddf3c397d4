@@ -47,7 +47,7 @@ public class Driver {
 		try {
             if (!headless) {
                 Path tempProfileDir = Files.createTempDirectory("chrome-profile-" + UUID.randomUUID());
-             //   options.addArguments("--user-data-dir=" + tempProfileDir.toAbsolutePath().toString());
+                options.addArguments("--user-data-dir=" + tempProfileDir.toAbsolutePath().toString());
                 logger.info("Using user-data-dir: " + tempProfileDir.toAbsolutePath().toString());
             } else {
                 logger.info("Headless mode - no user-data-dir used");
