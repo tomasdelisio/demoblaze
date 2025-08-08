@@ -45,12 +45,6 @@ jobs:
         working-directory: ./testProject/target/test-classes
         run: ls -R
 
-      - name: Limpiar carpeta test-output
-        working-directory: ./testProject
-        run: |
-          rm -rf test-output
-          echo "test-output limpiado"
-
       - name: Ejecutar tests con Maven
         working-directory: ./testProject
         run: mvn test
@@ -59,4 +53,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: reporte-pruebas
-          path: testProject/test-output/
+          path: testProject/target/surefire-reports/
