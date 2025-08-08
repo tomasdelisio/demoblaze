@@ -122,7 +122,7 @@ public class Register {
 		test.addScreenCaptureFromPath("screenshot.png");
 		
 		String msg = MessagesRegister.REGISTER_TEST_ERROR.getMessage();
-		test.fail(msg + "." + "\nUsuario: " + usr + " \nERROR: " + e.getMessage());
+	//	test.fail(msg + "." + "\nUsuario: " + usr + " \nERROR: " + e.getMessage());
 		System.out.println(msg + "\nUsuario: " + usr + " \nERROR: " + e.getMessage() + "\n");
 		
 		//return msg;
@@ -218,12 +218,11 @@ public class Register {
 			validateRegister(test, usr, pass, Messages.USR_PASS_NULL.getMessage());
 
 		} catch (AssertionError e) {
-			/*	error_msg = handleAssertionError(test, usr, e);
+			error_msg = handleAssertionError(test, usr, e);
 
 			AssertionError err = new AssertionError(error_msg);
 			err.setStackTrace(new StackTraceElement[0]);
-			throw err; */
-			handleAssertionError(test, usr, e);
+			throw err;
 			
 		} finally {
 			finishTest(test, usr);
