@@ -273,10 +273,9 @@ public class Login {
 		}
 
 		try {
-			Driver.finish();
+			Driver.finish(driver); 
 		} catch (Exception e) {
 			System.out.println("Error al cerrar el driver: " + e.getMessage());
 		}
-		
 	}
 }

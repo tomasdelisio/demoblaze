@@ -237,10 +237,17 @@ public class Register {
 
 	// Test Post-Config
 	@AfterMethod
-	public void finishTest() {
-		report.flush();
+	public void finishTests() {
+		try {
+			report.flush();
+		} catch (Exception e) {
+			System.out.println("Error al cerrar el reporte: " + e.getMessage());
+		}
 
-		Driver.finish();
-		
+		try {
+			Driver.finish(driver);
+		} catch (Exception e) {
+			System.out.println("Error al cerrar el driver: " + e.getMessage());
+		}
 	}
 }
