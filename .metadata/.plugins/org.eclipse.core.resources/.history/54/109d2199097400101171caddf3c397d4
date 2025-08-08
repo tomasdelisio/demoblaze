@@ -200,11 +200,12 @@ public class Login {
 			validateLoginIncorrect(test, usr, pass, Messages.USR_DOES_NOT_EXIST.getMessage());
 
 		} catch (AssertionError e) {
-			error_msg = handleAssertionError(test, usr, e);
+			/*	error_msg = handleAssertionError(test, usr, e);
 
 			AssertionError err = new AssertionError(error_msg);
 			err.setStackTrace(new StackTraceElement[0]);
-			throw err; 
+			throw err; */
+			handleAssertionError(test, usr, e);
 			
 		} finally {
 			finishTest(test, usr);
@@ -225,11 +226,12 @@ public class Login {
 			validateLoginIncorrect(test, usr, pass, Messages.WRONG_PASS.getMessage());
 
 		} catch (AssertionError e) {
-			error_msg = handleAssertionError(test, usr, e);
+			/*	error_msg = handleAssertionError(test, usr, e);
 
 			AssertionError err = new AssertionError(error_msg);
 			err.setStackTrace(new StackTraceElement[0]);
-			throw err;
+			throw err; */
+			handleAssertionError(test, usr, e);
 			
 		} finally {
 			finishTest(test, usr);
@@ -250,11 +252,12 @@ public class Login {
 			validateLoginIncorrect(test, usr, pass, Messages.USR_PASS_NULL.getMessage());
 
 		} catch (AssertionError e) {
-			error_msg = handleAssertionError(test, usr, e);
+			/*	error_msg = handleAssertionError(test, usr, e);
 
 			AssertionError err = new AssertionError(error_msg);
 			err.setStackTrace(new StackTraceElement[0]);
-			throw err;
+			throw err; */
+			handleAssertionError(test, usr, e);
 			
 		} finally {
 			finishTest(test, usr);
@@ -275,11 +278,12 @@ public class Login {
 			validateLoginIncorrect(test, usr, pass, Messages.USR_PASS_NULL.getMessage());
 
 		} catch (AssertionError e) {
-			error_msg = handleAssertionError(test, usr, e);
+			/*	error_msg = handleAssertionError(test, usr, e);
 
 			AssertionError err = new AssertionError(error_msg);
 			err.setStackTrace(new StackTraceElement[0]);
-			throw err;
+			throw err; */
+			handleAssertionError(test, usr, e);
 			
 		} finally {
 			finishTest(test, usr);
