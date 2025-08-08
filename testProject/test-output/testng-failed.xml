@@ -6,9 +6,6 @@
       <class name="test_register.Register">
         <methods>
           <include name="finishTests"/>
-          <include name="registerUsrOrPassNull" invocation-numbers="0 1"/>
-          <include name="registerUsrAndPassNull" invocation-numbers="0"/>
-          <include name="registerUsrExistent" invocation-numbers="0"/>
           <include name="registerOK" invocation-numbers="0"/>
           <include name="configurateTest"/>
         </methods>
