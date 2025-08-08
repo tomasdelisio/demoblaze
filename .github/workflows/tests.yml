@@ -47,7 +47,7 @@ jobs:
 
       - name: Ejecutar tests con testng.xml
         working-directory: ./testProject
-        run: mvn test -DsuiteXmlFile=testng.xml
+        run: mvn test -Dsurefire.suiteXmlFiles=testng.xml
         
       - name: Upload test report
         uses: actions/upload-artifact@v4
