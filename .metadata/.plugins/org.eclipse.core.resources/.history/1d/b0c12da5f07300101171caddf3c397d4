@@ -32,7 +32,10 @@ public class Driver {
 
 	    ChromeOptions options = new ChromeOptions();
 	    
+	    // Headless para GitHub Actions (muy importante usar "new")
 	    options.addArguments("--headless=new");
+
+	    // Requisitos para correr en entorno sin GUI
 	    options.addArguments("--disable-gpu");
 	    options.addArguments("--no-sandbox");
 	    options.addArguments("--disable-dev-shm-usage");
