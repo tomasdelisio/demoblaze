@@ -116,7 +116,7 @@ public class Register {
 		
 	}
 	
-	private void handleAssertionError(ExtentTest test, String usr, AssertionError e) {
+	private String handleAssertionError(ExtentTest test, String usr, AssertionError e) {
 		test.log(Status.INFO, Messages.HANDLE_ASSERTION_ERROR.getMessage());
 		
 		test.addScreenCaptureFromPath("screenshot.png");
@@ -125,7 +125,7 @@ public class Register {
 		test.fail(msg + "." + "\nUsuario: " + usr + " \nERROR: " + e.getMessage());
 		System.out.println(msg + "\nUsuario: " + usr + " \nERROR: " + e.getMessage() + "\n");
 		
-		//return msg;
+		return msg;
 	}
 
 	// Tests
@@ -141,12 +141,11 @@ public class Register {
 			validateRegister(test, usr, pass, MessagesRegister.REGISTER_OK.getMessage());
 
 		} catch (AssertionError e) {
-			/*	error_msg = handleAssertionError(test, usr, e);
+			error_msg = handleAssertionError(test, usr, e);
 
 			AssertionError err = new AssertionError(error_msg);
 			err.setStackTrace(new StackTraceElement[0]);
-			throw err; */
-			handleAssertionError(test, usr, e);
+			throw err;
 			
 		} finally {
 			finishTest(test, usr);
@@ -167,12 +166,11 @@ public class Register {
 			validateRegister(test, usr, pass, Messages.USR_EXIST.getMessage());
 
 		} catch (AssertionError e) {
-			/*	error_msg = handleAssertionError(test, usr, e);
+			error_msg = handleAssertionError(test, usr, e);
 
 			AssertionError err = new AssertionError(error_msg);
 			err.setStackTrace(new StackTraceElement[0]);
-			throw err; */
-			handleAssertionError(test, usr, e);
+			throw err;
 			
 		} finally {
 			finishTest(test, usr);
@@ -218,12 +216,11 @@ public class Register {
 			validateRegister(test, usr, pass, Messages.USR_PASS_NULL.getMessage());
 
 		} catch (AssertionError e) {
-			/*	error_msg = handleAssertionError(test, usr, e);
+			error_msg = handleAssertionError(test, usr, e);
 
 			AssertionError err = new AssertionError(error_msg);
 			err.setStackTrace(new StackTraceElement[0]);
-			throw err; */
-			handleAssertionError(test, usr, e);
+			throw err;
 			
 		} finally {
 			finishTest(test, usr);
