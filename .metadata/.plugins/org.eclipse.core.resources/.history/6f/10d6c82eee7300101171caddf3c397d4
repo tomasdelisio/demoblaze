@@ -2,7 +2,6 @@ package driver;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.UUID;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -44,17 +43,16 @@ public class Driver {
 		    options.addArguments("--headless");
 		}
 		
-		try {
-            if (!headless) {
-                Path tempProfileDir = Files.createTempDirectory("chrome-profile-" + UUID.randomUUID());
-                options.addArguments("--user-data-dir=" + tempProfileDir.toAbsolutePath().toString());
-                logger.info("Using user-data-dir: " + tempProfileDir.toAbsolutePath().toString());
-            } else {
-                logger.info("Headless mode - no user-data-dir used");
-            }
+        try {
+            Path tempProfileDir = Files.createTempDirectory("chrome-profile-");
+            options.addArguments("--user-data-dir=" + tempProfileDir.toAbsolutePath().toString());
+            logger.info("Using user-data-dir: " + tempProfileDir.toAbsolutePath().toString());
+        
         } catch (Exception e) {
             logger.error("Error creating temp user-data-dir", e);
+            
         }
+
 
 		logger.info("ChromeOptions Configuration Terminated");
 
@@ -66,7 +64,7 @@ public class Driver {
 	}
 
 	// Close Connection
-	public static void finish(WebDriver driver) {
+	public static void finish(WebDriver driver, Path userDataDir) {
 		if (driver != null) {
 			logger.info("Driver quit");
 			driver.quit();
@@ -75,5 +73,17 @@ public class Driver {
 			logger.warn("Driver is null, nothing to quit");
 			
 		}
+		
+		if (userDataDir != null) {
+	        try {
+	            Files.walk(userDataDir)
+	                .sorted(Comparator.reverseOrder())
+	                .map(Path::toFile)
+	                .forEach(File::delete);
+	            logger.info("Deleted temp user-data-dir: " + userDataDir.toString());
+	        } catch (IOException e) {
+	            logger.error("Error deleting temp user-data-dir", e);
+	        }
+	    }
 	}
 }

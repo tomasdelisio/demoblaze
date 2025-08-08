@@ -1,9 +1,5 @@
 package driver;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.UUID;
-
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -26,10 +22,8 @@ public class Driver {
 		String os = System.getProperty("os.name").toLowerCase();
 		if (os.contains("linux")) {
 		    System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
-		    
 		} else if (os.contains("win")) {
 		    System.setProperty("webdriver.chrome.driver", "src/test/resources/driver/chromedriver/138/chromedriver.exe");
-		    
 		}
 
 		logger.info("ChromeOptions Configuration Started");
@@ -43,18 +37,6 @@ public class Driver {
 		if (headless) {
 		    options.addArguments("--headless");
 		}
-		
-		try {
-            if (!headless) {
-                Path tempProfileDir = Files.createTempDirectory("chrome-profile-" + UUID.randomUUID());
-                options.addArguments("--user-data-dir=" + tempProfileDir.toAbsolutePath().toString());
-                logger.info("Using user-data-dir: " + tempProfileDir.toAbsolutePath().toString());
-            } else {
-                logger.info("Headless mode - no user-data-dir used");
-            }
-        } catch (Exception e) {
-            logger.error("Error creating temp user-data-dir", e);
-        }
 
 		logger.info("ChromeOptions Configuration Terminated");
 
@@ -70,10 +52,8 @@ public class Driver {
 		if (driver != null) {
 			logger.info("Driver quit");
 			driver.quit();
-			
 		} else {
 			logger.warn("Driver is null, nothing to quit");
-			
 		}
 	}
 }
