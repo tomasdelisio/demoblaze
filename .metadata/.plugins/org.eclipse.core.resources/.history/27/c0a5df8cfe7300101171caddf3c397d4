@@ -2,6 +2,7 @@ package test_login_api;
 
 import static org.testng.Assert.assertEquals;
 
+import org.junit.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;

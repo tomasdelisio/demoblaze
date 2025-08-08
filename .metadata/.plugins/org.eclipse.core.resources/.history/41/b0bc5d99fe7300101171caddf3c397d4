@@ -12,7 +12,7 @@ public class Driver {
 	private static Logger logger = LogManager.getLogger(Driver.class);
 	
 	// Headless
-	private static boolean headless = true;
+	private static boolean headless = false;
 
 	/*** METHODS ***/
 	// Driver Configuration
