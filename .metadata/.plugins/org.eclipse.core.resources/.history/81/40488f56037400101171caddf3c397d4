@@ -29,12 +29,14 @@ public class Driver {
 	    ChromeOptions options = new ChromeOptions();
 	    
 	    
-        options.addArguments("--headless=new");
-        options.addArguments("--disable-gpu");
-        options.addArguments("--no-sandbox");
-        options.addArguments("--disable-dev-shm-usage");
-        logger.info("Running Chrome in headless mode"); 
-        logger.info("Running Chrome with GUI");
+            options.addArguments("--headless=new");
+            options.addArguments("--disable-gpu");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
+            logger.info("Running Chrome in headless mode");
+        
+            logger.info("Running Chrome with GUI");
+        
 	    
 	    WebDriver driver = new ChromeDriver(options);
 	    return driver;

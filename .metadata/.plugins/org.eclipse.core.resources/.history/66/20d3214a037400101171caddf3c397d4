@@ -71,7 +71,7 @@ public class LoginAPI {
 		
 	}
 	
-	private void handleAssertionError(ExtentTest test, String usr, AssertionError e) {
+	private String handleAssertionError(ExtentTest test, String usr, AssertionError e) {
 		test.log(Status.INFO, Messages.HANDLE_ASSERTION_ERROR.getMessage());
 		
 		test.addScreenCaptureFromPath("screenshot.png");
@@ -81,7 +81,7 @@ public class LoginAPI {
 		String msg = MessagesLoginAPI.LOGIN_API_TEST_ERROR.getMessage();
 		System.out.println(msg + "\nUsuario: " + usr + " \nERROR: " + e.getMessage() + "\n");
 		
-	//	return msg;
+		return msg;
 		
 	}
 	

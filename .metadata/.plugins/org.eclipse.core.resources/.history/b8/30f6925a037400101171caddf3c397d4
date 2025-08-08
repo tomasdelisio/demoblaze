@@ -35,6 +35,7 @@ public class Driver {
         options.addArguments("--disable-dev-shm-usage");
         logger.info("Running Chrome in headless mode"); 
         logger.info("Running Chrome with GUI");
+        
 	    
 	    WebDriver driver = new ChromeDriver(options);
 	    return driver;
