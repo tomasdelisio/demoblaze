@@ -10,6 +10,9 @@ public class Driver {
 	/*** VARIABLES ***/
 	// Logger
 	private static Logger logger = LogManager.getLogger(Driver.class);
+	
+	// Headless
+	private static boolean headless = true;
 
 	/*** METHODS ***/
 	// Driver Configuration
@@ -24,6 +27,7 @@ public class Driver {
 	    }
 
 	    ChromeOptions options = new ChromeOptions();
+	    
 	    
         options.addArguments("--headless=new");
         options.addArguments("--disable-gpu");

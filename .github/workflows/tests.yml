@@ -39,7 +39,7 @@ jobs:
 
       - name: Compilar tests
         working-directory: ./testProject
-        run: mvn test-compile 
+        run: mvn test -Dmaven.test.failure.ignore=true
 
       - name: Listar clases compiladas
         working-directory: ./testProject/target/test-classes
@@ -50,6 +50,7 @@ jobs:
         run: mvn test
 
       - name: Upload test report
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: reporte-pruebas
