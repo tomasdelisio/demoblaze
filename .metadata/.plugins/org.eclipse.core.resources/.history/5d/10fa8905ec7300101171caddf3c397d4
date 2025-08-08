@@ -1,0 +1,281 @@
+package test_login;
+
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
+
+import org.openqa.selenium.WebDriver;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
+
+import data.Data;
+import driver.Driver;
+import pages.BasePage;
+import pages.LoginPage;
+import report.Report;
+import utils.Messages;
+import utils.MessagesLogin;
+
+public class Login {
+	/*** VARIABLES ***/
+	// Driver
+	private WebDriver driver = null;
+
+	// Pages
+	private BasePage base_page = null;
+	private LoginPage login_page = null;
+
+	// URL
+	private static final String URL = "https://www.demoblaze.com/index.html";
+	
+	// Data
+	private String usr_actual = null;
+	private String pass_actual = null;
+	private Boolean is_welcome_txt_actual_visible = null;
+	private String usr_of_welcome_txt_actual = null;
+	private String alert_txt_actual = null;
+
+	// Reports
+	private ExtentReports report = null;
+
+	/*** METHODS ***/
+	// Test Pre-Config
+	@BeforeMethod
+	public void configurateTest() {
+		driver = Driver.configurate();
+
+		report = Report.configurate();
+
+		base_page = new BasePage(driver);
+		base_page.navigateTo(URL);
+
+		login_page = new LoginPage();
+		
+	}
+	
+	// Testing Methods
+	private void startTest(ExtentTest test, String usr) {
+		test.log(Status.INFO, MessagesLogin.LOGIN_TEST_START.getMessage() + "\nUsuario: " + usr);
+		System.out.println(MessagesLogin.LOGIN_TEST_START.getMessage() + "\nUsuario: " + usr + "\n");
+		
+	}
+	
+	private void finishTest(ExtentTest test, String usr) {
+		test.log(Status.INFO, MessagesLogin.LOGIN_TEST_FINISH.getMessage() + "\nUsuario: " + usr);
+		System.out.println(MessagesLogin.LOGIN_TEST_FINISH.getMessage() + "\nUsuario: " + usr + "\n");
+		
+	}
+	
+	private void login(ExtentTest test, String usr, String pass) {
+		test.log(Status.INFO, MessagesLogin.LOGIN.getMessage());
+		
+		login_page.clickLoginBtn();
+		
+		login_page.completeUsr(usr);
+		usr_actual = login_page.getUsrFldContent();
+	
+		login_page.completePass(pass);
+		pass_actual = login_page.getPassFldContent();
+		
+		login_page.clickLoginBtn2();
+		
+		is_welcome_txt_actual_visible = login_page.isWelcomeTxtVisible();
+		usr_of_welcome_txt_actual = login_page.getUsrOfWelcomeTxtString();
+		
+		test.log(Status.INFO, MessagesLogin.LOGIN_COMPLETED.getMessage());
+		
+	}
+	
+	private void loginIncorrect(ExtentTest test, String usr, String pass) {
+		test.log(Status.INFO, MessagesLogin.LOGIN.getMessage());
+		
+		login_page.clickLoginBtn();
+		
+		login_page.completeUsr(usr);
+		usr_actual = login_page.getUsrFldContent();
+		
+		login_page.completePass(pass);
+		pass_actual = login_page.getPassFldContent();
+		
+		login_page.clickLoginBtn2();
+		
+		alert_txt_actual = login_page.getAlertTextString();
+
+		login_page.acceptAlert();
+		
+		test.log(Status.INFO, MessagesLogin.LOGIN_INCORRECT_COMPLETED.getMessage());
+		
+	}
+	
+	private void validateLogin(ExtentTest test, String usr, String pass) {
+		test.log(Status.INFO, MessagesLogin.VALIDATE_LOGIN.getMessage());
+		
+		assertEquals(usr_actual, usr, Messages.USR_MISMATCH.getMessage());
+		test.pass(Messages.USR_MATCH.getMessage());
+		
+		assertEquals(pass_actual, pass, Messages.PASS_MISMATCH.getMessage());
+		test.pass(Messages.PASS_MATCH.getMessage());
+		
+		assertTrue(is_welcome_txt_actual_visible, Messages.WELCOME_TXT_NOT_VISIBLE.getMessage());
+		test.pass(Messages.WELCOME_TXT_VISIBLE.getMessage());
+		
+		assertEquals(usr_of_welcome_txt_actual, usr, Messages.USR_OF_WELCOME_TXT_MISMATCH.getMessage());
+		test.pass(Messages.USR_OF_WELCOME_TXT_MATCH.getMessage());
+		
+		test.pass(MessagesLogin.LOGIN_TEST_OK.getMessage());
+		System.out.println(MessagesLogin.LOGIN_TEST_OK.getMessage() + "\nUsuario: " + usr + "\n");
+		
+	}
+	
+	private void validateLoginIncorrect(ExtentTest test, String usr, String pass, String msg) {
+		test.log(Status.INFO, MessagesLogin.VALIDATE_LOGIN_INCORRECT.getMessage());
+		
+		assertEquals(usr_actual, usr, Messages.USR_MISMATCH.getMessage());
+		test.pass(Messages.USR_MATCH.getMessage());
+		
+		assertEquals(pass_actual, pass, Messages.PASS_MISMATCH.getMessage());
+		test.pass(Messages.PASS_MATCH.getMessage());
+		
+		assertEquals(alert_txt_actual, msg, Messages.ALERT_TXT_MISMATCH.getMessage());
+		test.pass(Messages.ALERT_TXT_MATCH.getMessage());
+		
+		test.pass(MessagesLogin.LOGIN_INCORRECT_TEST_OK.getMessage());
+		System.out.println(MessagesLogin.LOGIN_INCORRECT_TEST_OK.getMessage() + "\nUsuario: " + usr + "\n");
+		
+	}
+	
+	private void handleAssertionError(ExtentTest test, String usr, AssertionError e) {
+		test.log(Status.INFO, Messages.HANDLE_ASSERTION_ERROR.getMessage());
+		
+		//String screenshotPath = ScreenshotUtils.capture(driver, usr); 
+		//test.addScreenCaptureFromPath(screenshotPath); CODEAR MÉTODO DE CAPTURA DE IMAGENES
+		
+		test.fail(MessagesLogin.LOGIN_TEST_ERROR.getMessage() + "\nUsuario: " + usr + " \nERROR: " + e.getMessage());
+		System.out.println(MessagesLogin.LOGIN_TEST_ERROR.getMessage() + "\nUsuario: " + usr + " \nERROR: " + e.getMessage() + "\n");
+		
+	}
+
+	// Tests
+	@Test(dataProvider = "Login", dataProviderClass = Data.class, priority = 1)
+	public void loginOK(String usr, String pass) {
+		ExtentTest test = report.createTest("Login Test");
+		
+		startTest(test, usr);
+		
+		login(test, usr, pass);
+		
+		try {
+			validateLogin(test, usr, pass);
+			
+		} catch (AssertionError e) {
+			handleAssertionError(test, usr, e);
+			
+		} finally {
+			finishTest(test, usr);
+			
+		}
+	}
+
+	@Test(dataProvider = "LoginUsernameIncorrect", dataProviderClass = Data.class, priority = 2)
+	public void loginUsrIncorrect(String usr, String pass) {
+		ExtentTest test = report.createTest("Login Username Incorrect Test");
+
+		startTest(test, usr);
+		
+		loginIncorrect(test, usr, pass);
+		
+		try {
+			validateLoginIncorrect(test, usr, pass, Messages.USR_DOES_NOT_EXIST.getMessage());
+
+		} catch (AssertionError e) {
+			handleAssertionError(test, usr, e);
+			
+		} finally {
+			finishTest(test, usr);
+			
+		}
+
+	}
+	
+	@Test(dataProvider = "LoginPasswordIncorrect", dataProviderClass = Data.class, priority = 3)
+	public void loginPassIncorrect(String usr, String pass) {
+		ExtentTest test = report.createTest("Login Password Incorrect Test");
+		
+		startTest(test, usr);
+		
+		loginIncorrect(test, usr, pass);
+
+		try {
+			validateLoginIncorrect(test, usr, pass, Messages.WRONG_PASS.getMessage());
+
+		} catch (AssertionError e) {
+			handleAssertionError(test, usr, e);
+			
+		} finally {
+			finishTest(test, usr);
+			
+		}
+
+	}
+
+	@Test(dataProvider = "LoginUsernameOrPasswordNull", dataProviderClass = Data.class, priority = 4)
+	public void loginUsrOrPassNull(String usr, String pass) {
+		ExtentTest test = report.createTest("Login Username Or Password Null Test");
+		
+		startTest(test, usr);
+		
+		loginIncorrect(test, usr, pass);
+
+		try {
+			validateLoginIncorrect(test, usr, pass, Messages.USR_PASS_NULL.getMessage());
+
+		} catch (AssertionError e) {
+			handleAssertionError(test, usr, e);
+			
+		} finally {
+			finishTest(test, usr);
+			
+		}
+
+	}
+	
+	@Test(dataProvider = "LoginUsernameAndPasswordNull", dataProviderClass = Data.class, priority = 5)
+	public void loginUsrAndPassNull(String usr, String pass) {
+		ExtentTest test = report.createTest("Login Username And Password Null Test");
+		
+		startTest(test, usr);
+		
+		loginIncorrect(test, usr, pass);
+
+		try {
+			validateLoginIncorrect(test, usr, pass, Messages.USR_PASS_NULL.getMessage());
+
+		} catch (AssertionError e) {
+			handleAssertionError(test, usr, e);
+			
+		} finally {
+			finishTest(test, usr);
+			
+		}
+	}
+	
+	// Test Post-Config
+	@AfterMethod
+	public void finishTests() {
+		try {
+			report.flush();
+		} catch (Exception e) {
+			System.out.println("Error al cerrar el reporte: " + e.getMessage());
+		}
+
+		try {
+			Driver.finish(driver);  // ahora pasamos la instancia driver concreta
+		} catch (Exception e) {
+			System.out.println("Error al cerrar el driver: " + e.getMessage());
+		}
+	}
+}

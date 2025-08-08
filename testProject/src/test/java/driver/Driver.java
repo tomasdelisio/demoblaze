@@ -8,24 +8,17 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 public class Driver {
 	/*** VARIABLES ***/
-	// Driver
-	private static WebDriver driver;
-
 	// Logger
 	private static Logger logger = LogManager.getLogger(Driver.class);
+	
+	// Headless
+	private static boolean headless = false;
 
 	/*** METHODS ***/
-	// Driver configuration
+	// Driver Configuration
 	public static WebDriver configurate() {
 		logger.info("Driver Configuration Started");
 
-		logger.info("Searching Driver");
-		// WINDOWS
-	//	System.setProperty("webdriver.chrome.driver", "src/test/resources/driver/chromedriver/138/chromedriver.exe");
-		
-		// LINUX
-		// System.setProperty("webdriver.chrome.driver", "");
-		
 		String os = System.getProperty("os.name").toLowerCase();
 		if (os.contains("linux")) {
 		    System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
@@ -38,27 +31,29 @@ public class Driver {
 
 		options.addArguments("--remote-allow-origins=*");
 		options.addArguments("--start-maximized");
-		options.addArguments("--headless");
 		options.addArguments("--no-sandbox");
 		options.addArguments("--disable-dev-shm-usage");
+		
+		if (headless) {
+		    options.addArguments("--headless");
+		}
 
 		logger.info("ChromeOptions Configuration Terminated");
 
-		driver = new ChromeDriver(options);
+		WebDriver driver = new ChromeDriver(options);
 
 		logger.info("Driver Configuration Terminated");
 
 		return driver;
-
 	}
 
-	// Close connection
-	public static void finish() {
-	//	logger.info("Driver close");
-	//	driver.close();
-		driver.quit();
-
-		logger.info("Driver quit");
-		
+	// Close Connection
+	public static void finish(WebDriver driver) {
+		if (driver != null) {
+			logger.info("Driver quit");
+			driver.quit();
+		} else {
+			logger.warn("Driver is null, nothing to quit");
+		}
 	}
 }
